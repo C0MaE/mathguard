@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mathguard"
+version = "0.2.0"
+description = "Verify mathematical claims from people and language models: identities, derivations, calculus, solutions and physical units."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Jannis Koberg" }]
+keywords = ["verification", "sympy", "llm", "computer-algebra", "dimensional-analysis", "mcp"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Intended Audience :: Science/Research",
+]
+dependencies = ["sympy>=1.12", "pint>=0.23"]
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.2"]
+bench = ["pyyaml>=6"]
+dev = ["pytest>=7", "pyyaml>=6"]
+
+[project.scripts]
+mathguard = "mathguard.cli:main"
+mathguard-mcp = "mathguard.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "src/mathguard"]
+addopts = "--doctest-modules --ignore=src/mathguard/mcp_server.py"

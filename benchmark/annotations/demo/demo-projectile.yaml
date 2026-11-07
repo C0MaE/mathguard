@@ -1,0 +1,17 @@
+# Annotation for the answer responses/demo/demo-projectile.md
+task: demo-projectile
+model: demo
+final:
+  R: {formula: "v0^2 sin(2 alpha) / g", value: 35.3}
+
+# Errors annotated by hand (ground truth). Empty list = no errors.
+errors: []
+
+# Calculations from the answer as mathguard checks. `step` numbers the
+# calculation steps of the answer so that errors and checks can be matched.
+checks:
+  - {step: 1, check: solutions, equation: "v0 sin(alpha) T - 1/2 g T^2 = 0", variable: T,
+     claimed: ["0", "2 v0 sin(alpha) / g"], assumptions: {v0: positive, g: positive, alpha: positive}}
+  - {step: 2, check: chain, steps: ["v0 cos(alpha) * 2 v0 sin(alpha) / g",
+     "2 v0^2 sin(alpha) cos(alpha) / g", "v0^2 sin(2 alpha) / g"]}
+  - {step: 3, check: value, expression: "20^2 sin(pi/3) / 9.81", claimed: 35.3, rel_tol: 2.0e-3}

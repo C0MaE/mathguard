@@ -1,0 +1,15 @@
+task: demo-rolling
+model: demo
+final:
+  v: {formula: "sqrt(7 g h / 10)", value: 2.87}
+
+errors:
+  - {type: algebra, step: 2, note: "7/10 v^2 = g h solved for v^2 incorrectly (reciprocal)"}
+
+checks:
+  - {step: 1, check: equal, lhs: "1/2 m v^2 + 1/2 (2/5 m r^2) (v/r)^2", rhs: "7/10 m v^2",
+     assumptions: {m: positive, r: positive}}
+  - {step: 2, check: solutions, equation: "g h = 7/10 v^2", variable: v,
+     claimed: ["sqrt(7 g h / 10)"], complete: false,
+     assumptions: {g: positive, h: positive, v: positive}}
+  - {step: 3, check: value, expression: "sqrt(0.7 * 9.81 * 1.2)", claimed: 2.87, rel_tol: 2.0e-3}

@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+.idea/
+benchmark/results/
+# Benchmark tasks from university problem sets (copyrighted): never publish.
+# Only demo-* tasks are tracked; everything else stays private.
+benchmark/tasks/*
+!benchmark/tasks/demo-*.yaml
+benchmark/responses/*
+!benchmark/responses/demo/
+benchmark/annotations/*
+!benchmark/annotations/demo/
+# Local setup scripts, not part of the package
+push-to-github.sh
+create-issues.sh

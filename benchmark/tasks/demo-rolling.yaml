@@ -1,0 +1,45 @@
+# Demo task (written for this repository, not taken from a problem sheet).
+id: demo-rolling
+demo: true
+source: {sheet: null, exercise: null, part: null}
+subject: Experimental Physics 1
+topic: Rigid body, rolling without slipping
+
+statement: |
+  A uniform solid sphere (mass $m$, radius $r$) starts from rest and rolls without slipping
+  down an inclined plane, losing the height $h = 1.2\,\mathrm{m}$.
+  What is the speed of its centre of mass at the bottom of the plane?
+  $g = 9.81\,\mathrm{m/s^2}$. Give the result as a formula and as a number.
+
+given:
+  h: "1.2 m"
+  g: "9.81 m/s^2"
+
+# m, r and alpha appear in intermediate steps, but not in the result.
+auxiliary:
+  m: "kg"
+  r: "m"
+  alpha: "rad"
+
+assumptions: {h: positive, g: positive, m: positive, r: positive, alpha: positive}
+
+wanted:
+  v:
+    description: speed of the centre of mass at the bottom
+    unit: m/s
+
+reference:
+  status: checked
+  checked_by: Demo
+  v:
+    path_a:
+      description: energy conservation including rotational energy, I = 2/5 m r^2
+      formula: "sqrt(10 g h / 7)"
+    path_b:
+      description: forces and torque, a = 5/7 g sin(alpha), distance s = h/sin(alpha)
+      steps:
+        - "sqrt(2 * (5/7 g sin(alpha)) * (h / sin(alpha)))"
+        - "sqrt(10 g h / 7)"
+      formula: "sqrt(2 * (5/7 g sin(alpha)) * (h / sin(alpha)))"
+    value: 4.101
+    rel_tol: 1.0e-3

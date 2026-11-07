@@ -1,0 +1,42 @@
+# Demo task (written for this repository, not taken from a problem sheet).
+# Only used to test the pipeline; does not count in the results.
+id: demo-projectile
+demo: true
+source: {sheet: null, exercise: null, part: null}
+subject: Experimental Physics 1
+topic: Projectile motion
+
+statement: |
+  A ball is thrown from level ground with initial speed $v_0 = 20\,\mathrm{m/s}$
+  at an angle $\alpha = 30^\circ$ above the horizontal.
+  Neglect air resistance, $g = 9.81\,\mathrm{m/s^2}$.
+  How far does the ball travel before it hits the ground again?
+  Give the result as a formula and as a number.
+
+given:
+  v0: "20 m/s"
+  alpha: "30 deg"
+  g: "9.81 m/s^2"
+
+assumptions: {v0: positive, alpha: positive, g: positive}
+
+wanted:
+  R:
+    description: range
+    unit: m
+
+reference:
+  status: checked          # open | checked | disputed
+  checked_by: Demo
+  R:
+    path_a:
+      description: kinematics, time of flight from the vertical motion
+      steps:
+        - "v0 cos(alpha) * (2 v0 sin(alpha) / g)"
+        - "2 v0^2 sin(alpha) cos(alpha) / g"
+      formula: "2 v0^2 sin(alpha) cos(alpha) / g"
+    path_b:
+      description: trajectory y(x) = 0 solved for x
+      formula: "v0^2 sin(2 alpha) / g"
+    value: 35.31
+    rel_tol: 1.0e-3

@@ -1,0 +1,64 @@
+# Error types for annotating model answers.
+#
+# `detectable` is our prior estimate of whether mathguard can find this kind of
+# error in principle, provided the affected calculation is available as a check.
+# The benchmark is meant to test exactly this estimate empirically.
+#
+#   yes    – calculation error that a CAS check refutes directly
+#   partly – only with a suitable check (units, limiting case, completeness)
+#   no     – outside of what mathguard checks (approach, reading the problem)
+
+algebra:
+  name: Algebra error
+  description: Wrong rearrangement, expansion or cancellation; fraction or power rule violated.
+  detectable: "yes"
+
+sign:
+  name: Sign error
+  description: Sign flipped in a rearrangement, a direction (axis) or an energy balance.
+  detectable: "yes"
+
+factor:
+  name: Missing or wrong factor
+  description: Factor 2, 1/2, pi, an exponent or similar lost or added.
+  detectable: "yes"
+
+calculus:
+  name: Differentiation or integration error
+  description: Derivative, antiderivative, limits or constant of integration wrong.
+  detectable: "yes"
+
+units:
+  name: Unit or dimension error
+  description: Inconsistent dimension, wrong conversion (cm, km/h, deg/rad, eV).
+  detectable: "partly"
+
+numeric:
+  name: Wrong numerical value
+  description: Formula correct, but inserting or evaluating it is wrong (rounding, calculator).
+  detectable: "yes"
+
+solution_set:
+  name: Incomplete or wrongly chosen solution set
+  description: Solution forgotten (e.g. second root) or unphysical solution kept.
+  detectable: "partly"
+
+limiting_case:
+  name: Limiting case or boundary condition violated
+  description: Result contradicts a known limiting case, initial or boundary condition.
+  detectable: "partly"
+
+approach:
+  name: Wrong physical approach
+  description: Wrong model, conservation law misapplied, force forgotten.
+  detectable: "no"
+
+interpretation:
+  name: Problem misunderstood
+  description: Wrong quantity computed, given information overlooked or misread.
+  detectable: "no"
+
+other:
+  name: Other
+  description: Fits no category, please describe it in `note`.
+  detectable: "no"
