@@ -18,4 +18,5 @@ jobs:
       - run: pip install -e ".[dev,mcp]"
       - run: pytest -q
       - run: mathguard check examples/checks.json
+      - run: mathguard grade examples/grading/tasks/rolling.yaml examples/grading/answers/model-a/rolling.md
       - run: python benchmark/bench.py validate

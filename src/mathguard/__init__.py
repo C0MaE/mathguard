@@ -5,8 +5,9 @@
 'verified'
 """
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
+from .answer import AnswerReport, Grade, check_answer, grade, load_task
 from .api import LLM_INSTRUCTIONS, verify, verify_json
 from .checks import (
     check_antiderivative,
@@ -25,12 +26,15 @@ from .units import check_dimensions, dimension_of
 from .verdict import Report, Status, Verdict
 
 __all__ = [
+    "AnswerReport",
     "DocumentReport",
+    "Grade",
     "LLM_INSTRUCTIONS",
     "ParseError",
     "Report",
     "Status",
     "Verdict",
+    "check_answer",
     "check_antiderivative",
     "check_chain",
     "check_definite_integral",
@@ -42,7 +46,9 @@ __all__ = [
     "check_solutions",
     "check_value",
     "dimension_of",
+    "grade",
     "latex_to_expr",
+    "load_task",
     "parse",
     "parse_latex",
     "verify",

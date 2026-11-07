@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.0
+
+* New: `check_answer` grades the final results of an answer against a reference:
+  finds `name = …` results in plain text, Markdown and LaTeX (boxed results and
+  "Result" blocks first), compares formulas symbolically and numbers with unit
+  conversion and a rounding-aware tolerance. Answers may use their own earlier
+  results or insert given numbers.
+* New: task files (YAML/JSON) with `reference`, `given`, `units`; `grade`, `load_task`.
+* New: `mathguard answer` and `mathguard grade` (single files or directories).
+* New: MCP tool `check_answer`, JSON check `answer`.
+* Example tasks and answers in `examples/grading/`.
+
 ## 0.2.0
 
 * New: `check_document` / `mathguard doc` checks a whole Markdown/LaTeX solution

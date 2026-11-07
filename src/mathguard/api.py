@@ -107,6 +107,24 @@ def _document(s):
     return Report(verdicts)
 
 
+def _answer(s):
+    from .answer import Grade, check_answer
+    answer, reference = _req(s, "answer", "reference")
+    rep = check_answer(answer, reference, given=s.get("given"), units=s.get("units"),
+                       assumptions=s.get("assumptions"),
+                       rel_tol=float(s.get("rel_tol", 0.01)), steps=bool(s.get("steps", False)))
+    status = {Grade.CORRECT: Status.VERIFIED, Grade.WRONG: Status.REFUTED,
+              Grade.MISSING: Status.INCONCLUSIVE, Grade.INCONCLUSIVE: Status.INCONCLUSIVE}
+    verdicts = []
+    for r in rep.results:
+        details = {"grade": r.grade.value}
+        if r.extracted:
+            details["extracted"] = r.extracted.to_dict()
+        verdicts.append(Verdict(f"answer:{r.name}", status[r.grade], r.message,
+                                method="comparison with the reference", details=details))
+    return Report(verdicts)
+
+
 def _latex(s, key):
     from .latex import latex_to_expr
     return latex_to_expr(s[key]) if s.get("latex") else s[key]
@@ -123,6 +141,7 @@ CHECKS: dict[str, Callable[[dict[str, Any]], Verdict | Report]] = {
     "limit": _limit,
     "dimensions": _dimensions,
     "document": _document,
+    "answer": _answer,
 }
 
 
@@ -197,6 +216,9 @@ Checks (one object or a list):
 
   {"check": "document", "text": "<your whole answer in Markdown with $...$ LaTeX>",
    "units": {"v0": "m/s", "g": "m/s^2"}}   # checks every formula chain in the text
+  {"check": "answer", "answer": "<a finished answer>",
+   "reference": {"v": "sqrt(10 g h / 7)"}, "given": {"h": "1.2 m", "g": "9.81 m/s^2"}}
+                                           # grades final results against a reference
 "equal" and "chain" also accept LaTeX with "latex": true (\\frac, \\sqrt, v_0, ...).
 In LaTeX, adjacent letters are products (mv^2 = m*v^2) and v_0 is the variable v0.
 

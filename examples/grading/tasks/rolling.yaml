@@ -1,0 +1,20 @@
+# A task for `mathguard grade`: reference results plus the known values.
+id: rolling
+statement: >
+  A solid sphere rolls without slipping down a slope of height h = 1.2 m.
+  How fast is it at the bottom, and how long does it take on a slope of length L = 3 m?
+given:
+  h: 1.2 m
+  L: 3 m
+  g: 9.81 m/s^2
+units:          # units of variables that have no value
+  m: kg
+  r: m
+reference:
+  v:
+    formula: sqrt(10 g h / 7)
+    unit: m/s
+  t:
+    formula: 2 L / sqrt(10 g h / 7)
+    unit: s
+    aliases: [T]

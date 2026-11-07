@@ -3,10 +3,13 @@
 **Verify mathematical claims — especially the ones language models make.**
 
 LLMs are good at setting up calculations and surprisingly bad at carrying them
-out reliably. `mathguard` is a small verification layer: the model (or you)
-states each claim as a structured check, and a computer algebra system decides
-whether it holds. Wrong claims come back with a concrete counterexample, so the
-mistake can be found and fixed.
+out reliably. `mathguard` is a small verification layer built on SymPy and Pint:
+
+* **Grade answers against a reference** — formulas symbolically, numbers with
+  unit conversion and rounding, for physics exercises and model evaluations.
+* **Find the faulty step** in a worked solution written in Markdown/LaTeX.
+* **Check single claims** (identities, derivatives, integrals, units) with a
+  concrete counterexample when they are wrong.
 
 ```python
 >>> import mathguard as mg
@@ -21,6 +24,40 @@ mistake can be found and fixed.
 
 Overall: REFUTED
 ```
+
+### Grade answers against a reference (new in 0.3)
+
+A task file holds the reference results and the known values:
+
+```yaml
+# examples/grading/tasks/rolling.yaml
+given: {h: 1.2 m, L: 3 m, g: 9.81 m/s^2}
+units: {m: kg, r: m}
+reference:
+  v: {formula: sqrt(10 g h / 7), unit: m/s}
+  t: {formula: 2 L / sqrt(10 g h / 7), unit: s, aliases: [T]}
+```
+
+mathguard finds the final result for every quantity in each answer (plain text,
+Markdown or LaTeX) and compares it with the reference:
+
+```bash
+mathguard grade examples/grading/tasks examples/grading/answers
+```
+
+```text
+✔ examples/grading/answers/model-a/rolling.md  2/2  correct
+✘ examples/grading/answers/model-b/rolling.md  0/2  wrong
+    ✘ v: formula from line 7; formula \sqrt{\tfrac{7 g h}{10}} differs from the reference sqrt(10 g h / 7); value 2.87 m/s differs from 4.10087 m/s by 30.0% (±1 %)
+    ✘ t: inserted v (line 7) from the answer; formula \frac{2L}{v} differs from the reference 2 L / sqrt(10 g h / 7); value 2.09 s differs from 1.4631 s by 42.8% (±1 %)
+    working: first error in line 7: v^2 = \tfrac{7}{10} g h
+
+2 answers, 1 fully correct; 2/4 quantities correct
+```
+
+Answer A wrote `v ≈ 14.8 km/h` and `T = 2 L / v`; both count as correct, because
+units are converted and the answer's own `v` is inserted. For answer B the step
+check also shows where the calculation went wrong.
 
 ### Check a whole answer (new in 0.2)
 
@@ -56,6 +93,7 @@ Overall: REFUTED (first error in line 6)
 | `check_solutions` | `x² − 5x + 6 = 0 → x ∈ {2, 3}` | substitutes each claim and checks no real solution is missing |
 | `check_value` | `√2·π ≈ 4.44288` | high-precision evaluation with tolerance |
 | `check_limit` | relativistic → classical limit | `sympy.limit` |
+| `check_answer` | final results against a reference | finds the results in the text, compares formulas symbolically and numbers with Pint |
 | `check_document` | a whole Markdown/LaTeX solution | finds every formula chain, checks rewritings, compares new equations with earlier ones, recomputes numbers |
 | `check_dimensions` | `E = m c²` with units | dimensional analysis with [Pint](https://pint.readthedocs.io) |
 
@@ -149,6 +187,46 @@ How a document is read:
 * LaTeX conventions apply: `mv^2` is `m*v^2`, `v_0` is the variable `v0`,
   `E_{kin}` is `Ekin`, `v'` is `vprime`, `60^\circ` is `pi/3`, `9{,}81` is `9.81`.
 
+### Grading answers
+
+```python
+r = mg.check_answer(
+    open("answer.md").read(),
+    {"v": "sqrt(10 g h / 7)", "t": {"value": 1.46, "unit": "s", "aliases": ["T"]}},
+    given={"h": "1.2 m", "g": "9.81 m/s^2", "L": "3 m"},
+)
+r.status            # Grade.CORRECT / WRONG / MISSING / INCONCLUSIVE
+r.score             # share of correct quantities
+r["v"].extracted    # what was read from the answer (line, formula, value, unit)
+r.steps             # step check of the working (check_document), if it has formulas
+
+mg.grade("task.yaml", answer_text)   # same, with a task file
+```
+
+* **Finding the result.** For each quantity mathguard takes the last line
+  `name = …` (also `name [description] = …`, `x(t) = …`, `$v_0 = …$`).
+  A `\boxed{}` result or a block under a heading such as `Result` / `Ergebnis`
+  wins. Name spellings are matched loosely (`v_0` = `v0`, `\lambda` = `lam`,
+  `\varepsilon_0` = `eps0`); `aliases` adds more names, and `part: b` only looks
+  inside the answer's part `b)`.
+* **Formulas** are compared with `check_equal` (variables positive). If the
+  answer uses its own earlier results (`t = 2 L / v`), they are inserted. If it
+  inserted given numbers (`1.6 t` for `2 c1 t`), the given values are inserted on
+  both sides. A formula in other variables than the reference is not judged.
+* **Numbers** are converted to the reference unit. The tolerance is the larger of
+  `rel_tol` (default 1 %) and half a unit in the last written digit, so `4 m/s`
+  matches `4.1 m/s` but `4.0 m/s` does not. A formula reference is turned into a
+  number with the `given` values, and so is a formula answer for a number
+  reference. A wrong dimension (`4.1 m` for a speed) is wrong.
+* **Grades:** `correct` if every comparison agrees, `wrong` if one disagrees,
+  `missing` if no result was found, `inconclusive` if nothing could be compared.
+
+Task files (YAML or JSON) have `reference`, and optionally `given`, `units`,
+`assumptions` and `rel_tol`. Each reference entry is a string (`"sqrt(2 g h)"`,
+`"4.1 m/s"`) or a mapping with `formula`, `value`, `unit`, `rel_tol`, `aliases`,
+`part`. Tasks of the benchmark format (`wanted` + `reference` with `path_a`) work
+as well.
+
 ### JSON (for LLM tool calls)
 
 ```python
@@ -171,11 +249,15 @@ mathguard chain "(x+1)^2" "x^2 + 2x + 1"
 mathguard dims "E = m c^2" --unit E=J --unit m=kg --unit c=m/s
 mathguard check examples/checks.json
 mathguard doc solution.md --unit v0=m/s --unit g=m/s^2   # whole solution
+mathguard answer answer.md --ref "v = sqrt(10 g h / 7)" --given h="1.2 m" --given g="9.81 m/s^2"
+mathguard grade task.yaml answer.md   # one task, one or more answers
+mathguard grade tasks/ answers/       # answers matched to tasks by file name
 mathguard prompt                      # print the LLM instructions
 ```
 
-Exit codes: `0` all good, `1` something was refuted, `2` inconclusive or input error —
-so it can be used in CI to check worked solutions.
+Exit codes: `0` all good (or all correct), `1` something was refuted (or wrong),
+`2` inconclusive, missing or input error — so it can be used in CI. `--json`
+goes before the command (`mathguard --json grade …`).
 
 ### MCP server (Claude Desktop, Claude Code, …)
 
@@ -193,7 +275,8 @@ Register `mathguard-mcp` as a stdio server in your client. Example config:
 }
 ```
 
-The server exposes `check_solution` (a whole Markdown/LaTeX answer),
+The server exposes `check_answer` (final results against a reference),
+`check_solution` (a whole Markdown/LaTeX answer),
 `verify_math`, `check_identity`, `check_derivation` and `check_units`, plus the
 LLM instructions as server instructions.
 
@@ -236,6 +319,12 @@ without a sandbox.
   `\frac{d}{dx}` inside a document are skipped.
 * A new equation that does not follow from earlier ones is not judged, so an
   error in setting up a physical law is not found (see the first point).
+  `check_answer` finds such errors only through the reference.
+* `check_answer` reads results, it does not understand the text. It needs a line
+  `name = …` for each quantity; results only given in words are reported as
+  `missing`. If an answer uses one name for several things (`\eta` in parts a and
+  c), the last one is taken unless the task sets `part`. In plain text, `e` is
+  Euler's number unless the task calls the elementary charge `qe`.
 
 ## How it works
 
@@ -249,6 +338,13 @@ without a sandbox.
 
 `benchmark/` measures how many real mistakes of a language model in physics
 exercises mathguard finds, split by error type. See [benchmark/README.md](benchmark/README.md).
+
+`check_answer` was compared with hand grading on 291 final results (35 physics
+exercises, answers of Claude Haiku, qwen3 8B and llama3.2 3B). It reached a
+verdict for 216 of them, and 213 of these agree with the hand grading (98.6 %);
+of the hand-graded correct results it recognised 156 of 182 as correct. The
+other results were reported as `missing` or `inconclusive`, mostly because the
+answer gave no result for that quantity or wrote it in other variables.
 
 ## License
 

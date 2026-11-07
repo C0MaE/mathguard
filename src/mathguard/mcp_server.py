@@ -75,6 +75,22 @@ def build_server():
         from .document import check_document
         return check_document(text, units=units, assumptions=assumptions).to_dict()
 
+    @server.tool()
+    def check_answer(answer: str, reference: dict[str, Any],
+                     given: dict[str, str] | None = None,
+                     units: dict[str, str] | None = None) -> dict[str, Any]:
+        """Grade the final results of an answer against a reference solution.
+        reference maps each wanted quantity to a formula or a value with unit,
+        e.g. {"v": "sqrt(10 g h / 7)"} or {"v": {"formula": "sqrt(10 g h / 7)",
+        "unit": "m/s"}} or {"t": "2.04 s"}. given holds known values
+        ({"h": "1.2 m", "g": "9.81 m/s^2"}) so formulas can be turned into numbers;
+        units gives units of other variables ({"m": "kg"}). Formulas are compared
+        symbolically, numbers with unit conversion and a 1 % tolerance (or the
+        rounding of the written digits). Use this when a reference solution
+        exists; without one, use check_solution on the working."""
+        from .answer import check_answer as _check_answer
+        return _check_answer(answer, reference, given=given, units=units).to_dict()
+
     return server
 
 
