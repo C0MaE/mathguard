@@ -280,6 +280,22 @@ The server exposes `check_answer` (final results against a reference),
 `verify_math`, `check_identity`, `check_derivation` and `check_units`, plus the
 LLM instructions as server instructions.
 
+### Agent skill (Claude Code, Cursor, Copilot, Codex, …)
+
+[`skills/mathguard/`](skills/mathguard/SKILL.md) is an
+[Agent Skill](https://agentskills.io): it tells a coding agent when to check
+maths with mathguard, which tool to use, and how to act on the result. It uses
+the MCP server when it is connected and falls back to the command line
+otherwise.
+
+```bash
+npx skills add C0MaE/mathguard        # or copy skills/mathguard/ into your agent's skills folder
+claude mcp add mathguard -- uvx --from "mathguard[mcp] @ git+https://github.com/C0MaE/mathguard" mathguard-mcp
+```
+
+Setup for other agents (Cursor, VS Code/Copilot, Codex, Claude Desktop, …) is in
+[skills/mathguard/references/setup.md](skills/mathguard/references/setup.md).
+
 ## Expression syntax
 
 * Powers: `x^2` or `x**2`. Implicit multiplication: `2x`, `m c^2`, `x(y+1)`.
