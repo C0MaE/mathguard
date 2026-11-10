@@ -1,5 +1,7 @@
 # mathguard
 
+<!-- mcp-name: io.github.C0MaE/mathguard -->
+
 **Verify mathematical claims — especially the ones language models make.**
 
 LLMs are good at setting up calculations and surprisingly bad at carrying them
