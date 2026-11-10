@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,17 +8,23 @@ version = "0.3.0"
 description = "Verify mathematical claims from people and language models: identities, derivations, calculus, solutions and physical units."
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [{ name = "Jannis Koberg" }]
 keywords = ["verification", "sympy", "llm", "computer-algebra", "dimensional-analysis", "mcp"]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Topic :: Scientific/Engineering :: Mathematics",
     "Topic :: Scientific/Engineering :: Physics",
     "Intended Audience :: Science/Research",
 ]
 dependencies = ["sympy>=1.12", "pint>=0.23"]
+
+[project.urls]
+Homepage = "https://github.com/C0MaE/mathguard"
+Source = "https://github.com/C0MaE/mathguard"
+Changelog = "https://github.com/C0MaE/mathguard/blob/main/CHANGELOG.md"
+Issues = "https://github.com/C0MaE/mathguard/issues"
 
 [project.optional-dependencies]
 mcp = ["mcp>=1.2"]
