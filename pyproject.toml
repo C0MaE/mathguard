@@ -18,7 +18,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Physics",
     "Intended Audience :: Science/Research",
 ]
-dependencies = ["sympy>=1.12", "pint>=0.23"]
+dependencies = ["sympy>=1.12", "pint>=0.23", "pyyaml>=6"]
 
 [project.urls]
 Homepage = "https://github.com/C0MaE/mathguard"
