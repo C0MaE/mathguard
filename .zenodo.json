@@ -1,0 +1,19 @@
+{
+  "title": "mathguard: verify mathematical claims and grade answers against a reference",
+  "upload_type": "software",
+  "description": "<p>mathguard checks mathematical claims made by people and language models with SymPy and Pint: identities, derivations, calculus, solutions and physical units. It finds the faulty step in worked solutions written in Markdown/LaTeX and grades final results against a reference, comparing formulas symbolically and numbers with unit conversion and a rounding-aware tolerance.</p>",
+  "creators": [
+    {
+      "name": "C0MaE"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "verification",
+    "computer algebra",
+    "dimensional analysis",
+    "physics education",
+    "LLM evaluation",
+    "sympy"
+  ]
+}

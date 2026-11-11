@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use mathguard in your work, please cite it as below."
+title: "mathguard: verify mathematical claims and grade answers against a reference"
+type: software
+authors:
+  - alias: C0MaE
+    website: "https://github.com/C0MaE"
+abstract: >-
+  mathguard checks mathematical claims made by people and language models with
+  SymPy and Pint: identities, derivations, calculus, solutions and physical units.
+  It finds the faulty step in worked solutions written in Markdown/LaTeX and grades
+  final results against a reference, comparing formulas symbolically and numbers
+  with unit conversion and a rounding-aware tolerance.
+version: 0.3.2
+license: MIT
+repository-code: "https://github.com/C0MaE/mathguard"
+url: "https://pypi.org/project/mathguard/"
+keywords:
+  - verification
+  - computer algebra
+  - dimensional analysis
+  - physics education
+  - LLM evaluation
+  - sympy
