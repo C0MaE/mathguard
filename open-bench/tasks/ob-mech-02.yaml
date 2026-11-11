@@ -1,0 +1,48 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-mech-02
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Mechanics
+topic: Atwood machine
+statement: |
+  Two blocks with masses $m_1 = 3\,\mathrm{kg}$ and $m_2 = 2\,\mathrm{kg}$ hang on either side of a
+  massless rope over a massless, frictionless pulley. $g = 9.81\,\mathrm{m/s^2}$.
+  Find the magnitude of the acceleration of the blocks and the tension in the rope.
+given:
+  m1: 3 kg
+  m2: 2 kg
+  g: 9.81 m/s^2
+auxiliary:
+  s: m
+assumptions:
+  g: positive
+  m1: positive
+  m2: positive
+  s: positive
+wanted:
+  a:
+    description: magnitude of the acceleration
+    unit: m/s^2
+  F:
+    description: rope tension
+    unit: N
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  a:
+    path_a:
+      description: Newton's second law for both blocks
+      formula: (m1 - m2) g / (m1 + m2)
+    path_b:
+      description: 'energy: (m1-m2) g s = (m1+m2) v^2/2 with v^2 = 2 a s'
+      formula: (m1 - m2) * g * s / ((m1 + m2) * s)
+    value: 1.962
+    rel_tol: 0.001
+  F:
+    path_a:
+      description: eliminate a from both equations of motion
+      formula: 2 m1 m2 g / (m1 + m2)
+    path_b:
+      description: 'lighter block: F - m2 g = m2 a'
+      formula: m2 * (g + (m1 - m2) g / (m1 + m2))
+    value: 23.544
+    rel_tol: 0.001

@@ -1,0 +1,31 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-opt-02
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Optics and waves
+topic: Total internal reflection
+statement: |
+  Light travels in glass ($n_1 = 1.5$) towards a flat interface with air ($n_2 = 1.0$). Above which
+  angle of incidence (measured from the normal) is the light totally reflected?
+given:
+  n1: '1.5'
+  n2: '1.0'
+assumptions:
+  n1: positive
+  n2: positive
+wanted:
+  theta:
+    description: critical angle
+    unit: deg
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  theta:
+    path_a:
+      description: Snell's law with a refraction angle of 90 degrees
+      formula: asin(n2 / n1)
+    path_b:
+      description: same angle via its tangent
+      formula: atan(n2 / sqrt(n1**2 - n2**2))
+    value: 41.81
+    rel_tol: 0.001
+    numeric_match_only: true

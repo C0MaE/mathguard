@@ -1,0 +1,36 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-mech-05
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Mechanics
+topic: Spring launcher
+statement: |
+  A spring with spring constant $k = 200\,\mathrm{N/m}$ is compressed by $d = 10\,\mathrm{cm}$ and
+  launches a ball of mass $m = 50\,\mathrm{g}$ vertically upwards. How high does the ball rise above the
+  point where it leaves the spring? Neglect air resistance and the change of height while the spring
+  relaxes; $g = 9.81\,\mathrm{m/s^2}$.
+given:
+  k: 200 N/m
+  d: 10 cm
+  m: 50 g
+  g: 9.81 m/s^2
+assumptions:
+  d: positive
+  g: positive
+  k: positive
+  m: positive
+wanted:
+  h:
+    description: maximum height
+    unit: m
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  h:
+    path_a:
+      description: spring energy = potential energy
+      formula: k d**2 / (2 m g)
+    path_b:
+      description: launch speed v0 = d sqrt(k/m), then h = v0^2 / (2 g)
+      formula: (d * sqrt(k / m))**2 / (2 g)
+    value: 2.0387
+    rel_tol: 0.001

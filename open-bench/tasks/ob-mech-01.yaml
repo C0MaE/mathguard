@@ -1,0 +1,33 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-mech-01
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Mechanics
+topic: Horizontal projectile
+statement: |
+  A stone is thrown horizontally with speed $v_0 = 8\,\mathrm{m/s}$ from the edge of a cliff of
+  height $H = 20\,\mathrm{m}$. Air resistance is negligible, $g = 9.81\,\mathrm{m/s^2}$.
+  How far from the foot of the cliff does the stone land?
+given:
+  v0: 8 m/s
+  H: 20 m
+  g: 9.81 m/s^2
+assumptions:
+  H: positive
+  g: positive
+  v0: positive
+wanted:
+  x:
+    description: horizontal distance from the foot of the cliff
+    unit: m
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  x:
+    path_a:
+      description: fall time from H = g t^2/2, times v0
+      formula: v0 * sqrt(2 H / g)
+    path_b:
+      description: trajectory y = g x^2/(2 v0^2) set equal to H
+      formula: sqrt(2 * v0**2 * H / g)
+    value: 16.155
+    rel_tol: 0.001

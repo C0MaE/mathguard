@@ -1,0 +1,35 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-mod-01
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Modern physics
+topic: Photoelectric effect
+statement: |
+  Light of wavelength $\lambda = 250\,\mathrm{nm}$ falls on a metal with work function
+  $W_A = 4.3\,\mathrm{eV}$. $h = 6.626\cdot10^{-34}\,\mathrm{J\,s}$, $c = 2.998\cdot10^{8}\,\mathrm{m/s}$.
+  What is the maximum kinetic energy of the emitted electrons?
+given:
+  lam: 250 nm
+  WA: 4.3 eV
+  h: 6.626e-34 J s
+  c: 2.998e8 m/s
+assumptions:
+  WA: positive
+  c: positive
+  h: positive
+  lam: positive
+wanted:
+  Ekin:
+    description: maximum kinetic energy
+    unit: eV
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  Ekin:
+    path_a:
+      description: Einstein's equation E = h f - W_A
+      formula: h c / lam - WA
+    path_b:
+      description: f = c/lam, threshold frequency WA/h, Ekin = h (f - f_threshold)
+      formula: h * (c / lam - WA / h)
+    value: 0.6594
+    rel_tol: 0.002

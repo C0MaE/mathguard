@@ -1,0 +1,32 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-em-05
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Electromagnetism
+topic: Resistor network
+statement: |
+  A resistor $R_1 = 100\,\Omega$ is connected in series with a parallel combination of
+  $R_2 = 200\,\Omega$ and $R_3 = 300\,\Omega$. What is the total resistance?
+given:
+  R1: 100 ohm
+  R2: 200 ohm
+  R3: 300 ohm
+assumptions:
+  R1: positive
+  R2: positive
+  R3: positive
+wanted:
+  Rtot:
+    description: total resistance
+    unit: ohm
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  Rtot:
+    path_a:
+      description: product over sum for the parallel part
+      formula: R1 + R2 R3 / (R2 + R3)
+    path_b:
+      description: sum of conductances for the parallel part
+      formula: R1 + 1 / (1/R2 + 1/R3)
+    value: 220
+    rel_tol: 0.001

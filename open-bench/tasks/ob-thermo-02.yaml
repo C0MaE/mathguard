@@ -1,0 +1,35 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-thermo-02
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Thermodynamics
+topic: Mixing temperature
+statement: |
+  $m_1 = 0.2\,\mathrm{kg}$ of water at $T_1 = 353.15\,\mathrm{K}$ is mixed with $m_2 = 0.3\,\mathrm{kg}$
+  of water at $T_2 = 293.15\,\mathrm{K}$ in an insulated vessel whose heat capacity is negligible.
+  What is the final temperature?
+given:
+  m1: 0.2 kg
+  T1: 353.15 K
+  m2: 0.3 kg
+  T2: 293.15 K
+assumptions:
+  T1: positive
+  T2: positive
+  m1: positive
+  m2: positive
+wanted:
+  Tf:
+    description: final temperature
+    unit: K
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  Tf:
+    path_a:
+      description: weighted mean of the temperatures
+      formula: (m1 T1 + m2 T2) / (m1 + m2)
+    path_b:
+      description: heat given off = heat taken up, c m1 (T1-Tf) = c m2 (Tf-T2)
+      formula: T2 + m1 (T1 - T2) / (m1 + m2)
+    value: 317.15
+    rel_tol: 0.0001

@@ -1,0 +1,33 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-wave-01
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Optics and waves
+topic: Vibrating string
+statement: |
+  A guitar string of length $L = 65\,\mathrm{cm}$ and linear mass density
+  $\mu = 5\,\mathrm{g/m}$ is under a tension of $F = 70\,\mathrm{N}$. What is the frequency of its
+  fundamental mode?
+given:
+  L: 65 cm
+  mu: 5 g/m
+  F: 70 N
+assumptions:
+  F: positive
+  L: positive
+  mu: positive
+wanted:
+  f:
+    description: fundamental frequency
+    unit: Hz
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  f:
+    path_a:
+      description: f = c / (2 L)
+      formula: sqrt(F / mu) / (2 L)
+    path_b:
+      description: 'wave speed from tension and total mass m = mu L: c = sqrt(F L / m)'
+      formula: 1 / (2 L) * sqrt(F * L / (mu * L))
+    value: 91.018
+    rel_tol: 0.001

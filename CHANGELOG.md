@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Open benchmark: 24 physics exercises written for this repository, licensed
+  CC BY 4.0, with checked two-path reference solutions (`open-bench/`).
+  `bench.py --root open-bench ...` runs the benchmark tools on it.
 * Zenodo DOI (10.5281/zenodo.24147172, all versions) in the README and `CITATION.cff`.
 
 ## 0.3.3

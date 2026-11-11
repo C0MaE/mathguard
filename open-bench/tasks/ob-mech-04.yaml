@@ -1,0 +1,35 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-mech-04
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Mechanics
+topic: Circular orbit
+statement: |
+  A satellite circles the Earth at an altitude of $h = 400\,\mathrm{km}$. Use the Earth radius
+  $R_E = 6371\,\mathrm{km}$, the Earth mass $M_E = 5.972\cdot10^{24}\,\mathrm{kg}$ and
+  $G = 6.674\cdot10^{-11}\,\mathrm{m^3\,kg^{-1}\,s^{-2}}$. What is its orbital period?
+given:
+  h: 400 km
+  RE: 6371 km
+  ME: 5.972e24 kg
+  G: 6.674e-11 m^3/(kg s^2)
+assumptions:
+  G: positive
+  ME: positive
+  RE: positive
+  h: positive
+wanted:
+  T:
+    description: orbital period
+    unit: s
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  T:
+    path_a:
+      description: Kepler's third law
+      formula: 2 pi sqrt((RE + h)**3 / (G ME))
+    path_b:
+      description: orbital speed from gravity = centripetal force, T = 2 pi r / v
+      formula: 2 pi (RE + h) / sqrt(G ME / (RE + h))
+    value: 5544.6
+    rel_tol: 0.002

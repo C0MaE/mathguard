@@ -1,0 +1,39 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-em-03
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Electromagnetism
+topic: Field of a long wire
+statement: |
+  A long straight wire carries a current $I = 10\,\mathrm{A}$. What is the magnetic flux density at a
+  distance $r = 5\,\mathrm{cm}$ from the wire? $\mu_0 = 1.25664\cdot10^{-6}\,\mathrm{N/A^2}$.
+given:
+  I: 10 A
+  r: 5 cm
+  mu0: 1.25664e-6 N/A^2
+assumptions:
+  I: positive
+  mu0: positive
+  r: positive
+wanted:
+  B:
+    description: magnetic flux density
+    unit: T
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  B:
+    path_a:
+      description: Ampère's law on a circle of radius r
+      formula: mu0 I / (2 pi r)
+    path_b:
+      description: Biot-Savart, the integral over sin(theta) from 0 to pi gives 2
+      formula: mu0 I / (4 pi r) * 2
+    value: 4.0e-05
+    rel_tol: 0.001
+    extra_checks:
+    - check: definite_integral
+      integrand: sin(theta)
+      variable: theta
+      lower: '0'
+      upper: pi
+      claimed: '2'

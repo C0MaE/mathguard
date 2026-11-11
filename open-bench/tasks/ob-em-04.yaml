@@ -1,0 +1,35 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-em-04
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Electromagnetism
+topic: Proton in a magnetic field
+statement: |
+  A proton ($m_p = 1.6726\cdot10^{-27}\,\mathrm{kg}$, $q = 1.602\cdot10^{-19}\,\mathrm{C}$) moves at
+  $v = 10^6\,\mathrm{m/s}$ perpendicular to a homogeneous magnetic field $B = 0.5\,\mathrm{T}$.
+  What is the radius of its circular path?
+given:
+  mp: 1.6726e-27 kg
+  q: 1.602e-19 C
+  v: 1e6 m/s
+  B: 0.5 T
+assumptions:
+  B: positive
+  mp: positive
+  q: positive
+  v: positive
+wanted:
+  rc:
+    description: radius of the circle
+    unit: m
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  rc:
+    path_a:
+      description: Lorentz force provides the centripetal force
+      formula: mp v / (q B)
+    path_b:
+      description: m v^2 / r = q v B solved for r
+      formula: mp v**2 / (q v B)
+    value: 0.020882
+    rel_tol: 0.001

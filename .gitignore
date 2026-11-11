@@ -20,3 +20,5 @@ benchmark/annotations/*
 # Local setup scripts, not part of the package
 push-to-github.sh
 create-issues.sh
+# Generated files of the open benchmark
+open-bench/results/

@@ -1,0 +1,37 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-mech-03
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Mechanics
+topic: Incline with friction
+statement: |
+  A block slides down a plane inclined at $\alpha = 30^\circ$ to the horizontal. The coefficient of
+  kinetic friction is $\mu = 0.2$, $g = 9.81\,\mathrm{m/s^2}$. What is the acceleration of the block?
+given:
+  alpha: 30 deg
+  mu: '0.2'
+  g: 9.81 m/s^2
+auxiliary:
+  m: kg
+  s: m
+assumptions:
+  alpha: positive
+  g: positive
+  m: positive
+  mu: positive
+  s: positive
+wanted:
+  a:
+    description: acceleration along the plane
+    unit: m/s^2
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  a:
+    path_a:
+      description: forces along and normal to the plane
+      formula: g (sin(alpha) - mu cos(alpha))
+    path_b:
+      description: work-energy theorem over a distance s
+      formula: (m g s sin(alpha) - mu m g cos(alpha) s) / (m s)
+    value: 3.2058
+    rel_tol: 0.001

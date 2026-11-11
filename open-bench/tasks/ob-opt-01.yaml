@@ -1,0 +1,30 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-opt-01
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Optics and waves
+topic: Thin lens
+statement: |
+  An object stands $a = 15\,\mathrm{cm}$ in front of a thin converging lens with focal length
+  $f = 10\,\mathrm{cm}$. How far behind the lens is the image?
+given:
+  a: 15 cm
+  f: 10 cm
+assumptions:
+  a: positive
+  f: positive
+wanted:
+  b:
+    description: image distance
+    unit: cm
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  b:
+    path_a:
+      description: lens equation solved for b
+      formula: a f / (a - f)
+    path_b:
+      description: lens equation 1/f = 1/a + 1/b
+      formula: 1 / (1/f - 1/a)
+    value: 30
+    rel_tol: 0.001
