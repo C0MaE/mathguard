@@ -105,11 +105,16 @@ def main(argv: list[str] | None = None) -> int:
     pg.add_argument("--verbose", "-v", action="store_true", help="show every quantity")
 
     sub.add_parser("prompt", help="print instructions to paste into an LLM system prompt")
+    sub.add_parser("mcp", help="run the MCP server over stdio (same as mathguard-mcp)")
 
     args = p.parse_args(argv)
 
     if args.cmd == "prompt":
         print(LLM_INSTRUCTIONS)
+        return 0
+    if args.cmd == "mcp":
+        from .mcp_server import main as mcp_main
+        mcp_main()
         return 0
     if args.cmd == "equal":
         return _emit(Report([check_equal(args.lhs, args.rhs, _pairs(args.assume, "assume"))]),

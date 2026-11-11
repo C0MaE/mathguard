@@ -5,7 +5,7 @@
 'verified'
 """
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 from .answer import AnswerReport, Grade, check_answer, grade, load_task
 from .api import LLM_INSTRUCTIONS, verify, verify_json

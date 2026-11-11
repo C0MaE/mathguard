@@ -116,8 +116,6 @@ For machine-checked proofs, look at [Lean 4](https://lean-lang.org) and Mathlib.
 
 ```bash
 pip install mathguard
-# with the MCP server for AI assistants:
-pip install "mathguard[mcp]"
 ```
 
 For development:
@@ -264,7 +262,7 @@ goes before the command (`mathguard --json grade …`).
 ### MCP server (Claude Desktop, Claude Code, …)
 
 ```bash
-pip install "mathguard[mcp]"
+pip install mathguard
 ```
 
 Register `mathguard-mcp` as a stdio server in your client. Example config:
@@ -292,7 +290,7 @@ otherwise.
 
 ```bash
 npx skills add C0MaE/mathguard        # or copy skills/mathguard/ into your agent's skills folder
-claude mcp add mathguard -- uvx --from "mathguard[mcp]" mathguard-mcp
+claude mcp add mathguard -- uvx mathguard mcp
 ```
 
 Setup for other agents (Cursor, VS Code/Copilot, Codex, Claude Desktop, …) is in
