@@ -12,7 +12,7 @@ abstract: >-
   final results against a reference, comparing formulas symbolically and numbers
   with unit conversion and a rounding-aware tolerance.
 version: 0.3.3
-doi: 10.5281/zenodo.24147173
+doi: 10.5281/zenodo.24147172
 license: MIT
 repository-code: "https://github.com/C0MaE/mathguard"
 url: "https://pypi.org/project/mathguard/"

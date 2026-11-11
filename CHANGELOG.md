@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-* Zenodo DOI (10.5281/zenodo.24147173) in the README and `CITATION.cff`.
+* Zenodo DOI (10.5281/zenodo.24147172, all versions) in the README and `CITATION.cff`.
 
 ## 0.3.3
 
