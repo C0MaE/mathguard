@@ -10,7 +10,7 @@ The skill has two parts:
 Requirements: Python 3.10 or newer. The commands below use
 [uv](https://docs.astral.sh/uv/) (`uvx`), which downloads and caches mathguard
 on first use, so nothing has to be installed by hand. Without uv, install once
-with `pip install "mathguard[mcp] @ git+https://github.com/C0MaE/mathguard"`
+with `pip install "mathguard[mcp]"`
 and use `mathguard-mcp` as the command instead of the `uvx ...` line.
 
 The first start takes up to a minute while uv downloads SymPy; later starts
@@ -49,13 +49,13 @@ Agents without skill support: paste the body of `SKILL.md` (or the output of
 The server runs locally over stdio. The command is always:
 
 ```bash
-uvx --from "mathguard[mcp] @ git+https://github.com/C0MaE/mathguard" mathguard-mcp
+uvx --from "mathguard[mcp]" mathguard-mcp
 ```
 
 ### Claude Code
 
 ```bash
-claude mcp add mathguard -- uvx --from "mathguard[mcp] @ git+https://github.com/C0MaE/mathguard" mathguard-mcp
+claude mcp add mathguard -- uvx --from "mathguard[mcp]" mathguard-mcp
 ```
 
 Add `--scope user` to use it in every project, or `--scope project` to write it
@@ -72,7 +72,7 @@ Add this to the client's MCP config (Claude Desktop:
   "mcpServers": {
     "mathguard": {
       "command": "uvx",
-      "args": ["--from", "mathguard[mcp] @ git+https://github.com/C0MaE/mathguard", "mathguard-mcp"]
+      "args": ["--from", "mathguard[mcp]", "mathguard-mcp"]
     }
   }
 }
@@ -88,7 +88,7 @@ Add this to the client's MCP config (Claude Desktop:
     "mathguard": {
       "type": "stdio",
       "command": "uvx",
-      "args": ["--from", "mathguard[mcp] @ git+https://github.com/C0MaE/mathguard", "mathguard-mcp"]
+      "args": ["--from", "mathguard[mcp]", "mathguard-mcp"]
     }
   }
 }
@@ -97,7 +97,7 @@ Add this to the client's MCP config (Claude Desktop:
 ### OpenAI Codex
 
 ```bash
-codex mcp add mathguard -- uvx --from "mathguard[mcp] @ git+https://github.com/C0MaE/mathguard" mathguard-mcp
+codex mcp add mathguard -- uvx --from "mathguard[mcp]" mathguard-mcp
 ```
 
 ### No MCP support
@@ -112,5 +112,5 @@ It should report the claim as refuted with a counterexample. On the command
 line:
 
 ```bash
-uvx --from "git+https://github.com/C0MaE/mathguard" mathguard equal "(x+1)^2 - (x-1)^2" "4x + 2"
+uvx mathguard equal "(x+1)^2 - (x-1)^2" "4x + 2"
 ```
