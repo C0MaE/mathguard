@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1
+
+* New: `mathguard mcp` starts the MCP server (same as `mathguard-mcp`), so
+  `uvx mathguard mcp` runs it without extra options.
+* The MCP SDK is now a regular dependency; `mathguard[mcp]` still works.
+* Listed in the MCP Registry as `io.github.C0MaE/mathguard` (`server.json`),
+  published automatically with each release.
+
 ## 0.3.0
 
 * New: `check_answer` grades the final results of an answer against a reference:

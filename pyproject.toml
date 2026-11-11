@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mathguard"
-version = "0.3.0"
+version = "0.3.1"
 description = "Verify mathematical claims from people and language models: identities, derivations, calculus, solutions and physical units."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -18,7 +18,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Physics",
     "Intended Audience :: Science/Research",
 ]
-dependencies = ["sympy>=1.12", "pint>=0.23", "pyyaml>=6"]
+dependencies = ["sympy>=1.12", "pint>=0.23", "pyyaml>=6", "mcp>=1.2"]
 
 [project.urls]
 Homepage = "https://github.com/C0MaE/mathguard"
@@ -27,7 +27,7 @@ Changelog = "https://github.com/C0MaE/mathguard/blob/main/CHANGELOG.md"
 Issues = "https://github.com/C0MaE/mathguard/issues"
 
 [project.optional-dependencies]
-mcp = ["mcp>=1.2"]
+mcp = []  # kept so that "mathguard[mcp]" still installs; mcp is a core dependency since 0.3.1
 bench = ["pyyaml>=6"]
 dev = ["pytest>=7", "pyyaml>=6"]
 

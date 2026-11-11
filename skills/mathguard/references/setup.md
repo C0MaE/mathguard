@@ -10,7 +10,7 @@ The skill has two parts:
 Requirements: Python 3.10 or newer. The commands below use
 [uv](https://docs.astral.sh/uv/) (`uvx`), which downloads and caches mathguard
 on first use, so nothing has to be installed by hand. Without uv, install once
-with `pip install "mathguard[mcp]"`
+with `pip install mathguard`
 and use `mathguard-mcp` as the command instead of the `uvx ...` line.
 
 The first start takes up to a minute while uv downloads SymPy; later starts
@@ -49,13 +49,13 @@ Agents without skill support: paste the body of `SKILL.md` (or the output of
 The server runs locally over stdio. The command is always:
 
 ```bash
-uvx --from "mathguard[mcp]" mathguard-mcp
+uvx mathguard mcp
 ```
 
 ### Claude Code
 
 ```bash
-claude mcp add mathguard -- uvx --from "mathguard[mcp]" mathguard-mcp
+claude mcp add mathguard -- uvx mathguard mcp
 ```
 
 Add `--scope user` to use it in every project, or `--scope project` to write it
@@ -72,7 +72,7 @@ Add this to the client's MCP config (Claude Desktop:
   "mcpServers": {
     "mathguard": {
       "command": "uvx",
-      "args": ["--from", "mathguard[mcp]", "mathguard-mcp"]
+      "args": ["mathguard", "mcp"]
     }
   }
 }
@@ -88,7 +88,7 @@ Add this to the client's MCP config (Claude Desktop:
     "mathguard": {
       "type": "stdio",
       "command": "uvx",
-      "args": ["--from", "mathguard[mcp]", "mathguard-mcp"]
+      "args": ["mathguard", "mcp"]
     }
   }
 }
@@ -97,7 +97,7 @@ Add this to the client's MCP config (Claude Desktop:
 ### OpenAI Codex
 
 ```bash
-codex mcp add mathguard -- uvx --from "mathguard[mcp]" mathguard-mcp
+codex mcp add mathguard -- uvx mathguard mcp
 ```
 
 ### No MCP support
