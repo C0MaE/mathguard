@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* Zenodo DOI (10.5281/zenodo.24147173) in the README and `CITATION.cff`.
+
 ## 0.3.3
 
 * `CITATION.cff` and `.zenodo.json`, so the repository can be cited and releases
