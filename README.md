@@ -381,6 +381,11 @@ answer gave no result for that quantity or wrote it in other variables.
 Reports of wrong verdicts are the most welcome contribution. See
 [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Citing
+
+If you use mathguard in research or teaching, please cite it. GitHub shows the
+citation under "Cite this repository" (from [CITATION.cff](CITATION.cff)).
+
 ## License
 
 MIT

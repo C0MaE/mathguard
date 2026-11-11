@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* `CITATION.cff` and `.zenodo.json`, so the repository can be cited and releases
+  can be archived on Zenodo.
 * Fix: the command line no longer fails on consoles that cannot print ✔/✘
   (e.g. a redirected Windows console with cp1252); it writes UTF-8 there.
 * The package is marked as typed (`py.typed`), with classifiers for the
