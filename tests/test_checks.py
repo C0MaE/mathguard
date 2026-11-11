@@ -3,7 +3,6 @@ import pytest
 import mathguard as mg
 from mathguard import Status
 
-
 # ---------------------------------------------------------------- equalities
 
 @pytest.mark.parametrize("lhs, rhs", [

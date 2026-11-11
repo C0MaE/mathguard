@@ -14,8 +14,9 @@ Physical constants can be given by their Pint names, e.g.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from functools import lru_cache
-from typing import Any, Mapping
+from typing import Any
 
 import sympy as sp
 

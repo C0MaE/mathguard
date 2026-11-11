@@ -1,0 +1,15 @@
+name: Feature request
+description: A check, an input format or an integration that mathguard should support.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you want to check?
+      description: A concrete example helps most, e.g. an answer mathguard cannot read yet.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How could it work?

@@ -13,10 +13,21 @@ license-files = ["LICENSE"]
 authors = [{ name = "Jannis Koberg" }]
 keywords = ["verification", "sympy", "llm", "computer-algebra", "dimensional-analysis", "mcp"]
 classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Mathematics",
     "Topic :: Scientific/Engineering :: Physics",
-    "Intended Audience :: Science/Research",
+    "Typing :: Typed",
 ]
 dependencies = ["sympy>=1.12", "pint>=0.23", "pyyaml>=6", "mcp>=1.2"]
 
@@ -29,7 +40,7 @@ Issues = "https://github.com/C0MaE/mathguard/issues"
 [project.optional-dependencies]
 mcp = []  # kept so that "mathguard[mcp]" still installs; mcp is a core dependency since 0.3.1
 bench = ["pyyaml>=6"]
-dev = ["pytest>=7", "pyyaml>=6"]
+dev = ["pytest>=7", "pyyaml>=6", "ruff>=0.6"]
 
 [project.scripts]
 mathguard = "mathguard.cli:main"
@@ -38,6 +49,16 @@ mathguard-mcp = "mathguard.mcp_server:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+mathguard = ["py.typed"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests", "src/mathguard"]
 addopts = "--doctest-modules --ignore=src/mathguard/mcp_server.py"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]

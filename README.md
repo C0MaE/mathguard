@@ -1,5 +1,10 @@
 # mathguard
 
+[![PyPI](https://img.shields.io/pypi/v/mathguard)](https://pypi.org/project/mathguard/)
+[![Python](https://img.shields.io/pypi/pyversions/mathguard)](https://pypi.org/project/mathguard/)
+[![tests](https://github.com/C0MaE/mathguard/actions/workflows/tests.yml/badge.svg)](https://github.com/C0MaE/mathguard/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 <!-- mcp-name: io.github.C0MaE/mathguard -->
 
 **Verify mathematical claims — especially the ones language models make.**
@@ -12,6 +17,8 @@ out reliably. `mathguard` is a small verification layer built on SymPy and Pint:
 * **Find the faulty step** in a worked solution written in Markdown/LaTeX.
 * **Check single claims** (identities, derivatives, integrals, units) with a
   concrete counterexample when they are wrong.
+
+![mathguard doc finds the line where a worked solution goes wrong](https://raw.githubusercontent.com/C0MaE/mathguard/main/docs/demo.gif)
 
 ```python
 >>> import mathguard as mg
@@ -122,8 +129,9 @@ For development:
 
 ```bash
 git clone https://github.com/C0MaE/mathguard && cd mathguard
-pip install -e ".[dev,mcp]"
+pip install -e ".[dev]"
 pytest
+ruff check src tests
 ```
 
 ## Usage
@@ -367,6 +375,11 @@ verdict for 216 of them, and 213 of these agree with the hand grading (98.6 %);
 of the hand-graded correct results it recognised 156 of 182 as correct. The
 other results were reported as `missing` or `inconclusive`, mostly because the
 answer gave no result for that quantity or wrote it in other variables.
+
+## Contributing
+
+Reports of wrong verdicts are the most welcome contribution. See
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 

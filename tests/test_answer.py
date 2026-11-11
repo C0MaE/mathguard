@@ -151,7 +151,7 @@ def test_formula_from_earlier_line_is_added():
 # --------------------------------------------------------------------- steps
 
 def test_steps_point_at_the_error():
-    text = (GRADING / "answers" / "model-b" / "rolling.md").read_text()
+    text = (GRADING / "answers" / "model-b" / "rolling.md").read_text(encoding="utf-8")
     task = mg.load_task(GRADING / "tasks" / "rolling.yaml") if _yaml() else None
     if task is None:
         pytest.skip("needs PyYAML")
@@ -192,10 +192,10 @@ def test_bad_reference_is_an_error():
 
 def test_cli_answer(tmp_path, capsys):
     f = tmp_path / "a.md"
-    f.write_text("v = 14.8 km/h")
+    f.write_text("v = 14.8 km/h", encoding="utf-8")
     assert main(["answer", str(f), "--ref", "v = 4.1 m/s"]) == 0
     assert main(["answer", str(f), "--ref", "v = 3 m/s"]) == 1
-    f.write_text("nothing")
+    f.write_text("nothing", encoding="utf-8")
     assert main(["answer", str(f), "--ref", "v = 3 m/s"]) == 2
 
 

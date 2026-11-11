@@ -8,8 +8,9 @@ from __future__ import annotations
 
 import signal
 import threading
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
-from typing import Callable, Iterator, TypeVar
+from typing import TypeVar
 
 T = TypeVar("T")
 
