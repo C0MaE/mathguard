@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+* New: Agent Skill in `skills/mathguard/` (SKILL.md, JSON check reference,
+  setup for Claude Code, Cursor, VS Code/Copilot, Codex and Claude Desktop).
+  Runs the MCP server or the command line through `uvx`, no manual install.
+
 ## 0.3.0
 
 * New: `check_answer` grades the final results of an answer against a reference:
