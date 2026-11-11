@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2
+
+* Package metadata and license list the author as C0MaE.
+
 ## 0.3.1
 
 * New: `mathguard mcp` starts the MCP server (same as `mathguard-mcp`), so
