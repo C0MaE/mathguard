@@ -111,11 +111,11 @@ solutions or value checks.
 Run the CLI with `uvx`, which needs no prior install:
 
 ```bash
-uvx --from "git+https://github.com/C0MaE/mathguard" mathguard equal "sin(x)^2 + cos(x)^2" "1"
-uvx --from "git+https://github.com/C0MaE/mathguard" mathguard --json doc solution.md --unit v0=m/s --unit g=m/s^2
+uvx mathguard equal "sin(x)^2 + cos(x)^2" "1"
+uvx mathguard --json doc solution.md --unit v0=m/s --unit g=m/s^2
 ```
 
-If `mathguard` is installed (`pip install "git+https://github.com/C0MaE/mathguard"`),
+If `mathguard` is installed (`pip install mathguard`),
 call it directly. Put `--json` before the subcommand for machine-readable
 output. Exit codes: `0` all good, `1` something refuted or wrong, `2`
 inconclusive, missing or input error. `mathguard prompt` prints the full JSON

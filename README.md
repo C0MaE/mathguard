@@ -115,9 +115,9 @@ For machine-checked proofs, look at [Lean 4](https://lean-lang.org) and Mathlib.
 ## Installation
 
 ```bash
-pip install git+https://github.com/C0MaE/mathguard
+pip install mathguard
 # with the MCP server for AI assistants:
-pip install "mathguard[mcp] @ git+https://github.com/C0MaE/mathguard"
+pip install "mathguard[mcp]"
 ```
 
 For development:
@@ -284,7 +284,7 @@ LLM instructions as server instructions.
 
 ### Agent skill (Claude Code, Cursor, Copilot, Codex, …)
 
-[`skills/mathguard/`](skills/mathguard/SKILL.md) is an
+[`skills/mathguard/`](https://github.com/C0MaE/mathguard/blob/main/skills/mathguard/SKILL.md) is an
 [Agent Skill](https://agentskills.io): it tells a coding agent when to check
 maths with mathguard, which tool to use, and how to act on the result. It uses
 the MCP server when it is connected and falls back to the command line
@@ -292,11 +292,11 @@ otherwise.
 
 ```bash
 npx skills add C0MaE/mathguard        # or copy skills/mathguard/ into your agent's skills folder
-claude mcp add mathguard -- uvx --from "mathguard[mcp] @ git+https://github.com/C0MaE/mathguard" mathguard-mcp
+claude mcp add mathguard -- uvx --from "mathguard[mcp]" mathguard-mcp
 ```
 
 Setup for other agents (Cursor, VS Code/Copilot, Codex, Claude Desktop, …) is in
-[skills/mathguard/references/setup.md](skills/mathguard/references/setup.md).
+[skills/mathguard/references/setup.md](https://github.com/C0MaE/mathguard/blob/main/skills/mathguard/references/setup.md).
 
 ## Expression syntax
 

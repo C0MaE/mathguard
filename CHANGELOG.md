@@ -1,11 +1,5 @@
 # Changelog
 
-## Unreleased
-
-* New: Agent Skill in `skills/mathguard/` (SKILL.md, JSON check reference,
-  setup for Claude Code, Cursor, VS Code/Copilot, Codex and Claude Desktop).
-  Runs the MCP server or the command line through `uvx`, no manual install.
-
 ## 0.3.0
 
 * New: `check_answer` grades the final results of an answer against a reference:
@@ -17,6 +11,12 @@
 * New: `mathguard answer` and `mathguard grade` (single files or directories).
 * New: MCP tool `check_answer`, JSON check `answer`.
 * Example tasks and answers in `examples/grading/`.
+* New: Agent Skill in `skills/mathguard/` (SKILL.md, JSON check reference,
+  setup for Claude Code, Cursor, VS Code/Copilot, Codex and Claude Desktop).
+  Runs the MCP server or the command line through `uvx`, no manual install.
+* Benchmark: first results in `benchmark/RESULTS.md` (aggregate numbers only).
+* Packaging: published on PyPI (`pip install mathguard`); PyYAML is now a
+  regular dependency, so YAML task files work after a plain install.
 
 ## 0.2.0
 
