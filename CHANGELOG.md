@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.3
 
 * `CITATION.cff` and `.zenodo.json`, so the repository can be cited and releases
   can be archived on Zenodo.
