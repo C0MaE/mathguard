@@ -1,5 +1,7 @@
 # mathguard
 
+<!-- mcp-name: io.github.C0MaE/mathguard -->
+
 **Verify mathematical claims — especially the ones language models make.**
 
 LLMs are good at setting up calculations and surprisingly bad at carrying them
@@ -353,7 +355,13 @@ without a sandbox.
 ## Benchmark
 
 `benchmark/` measures how many real mistakes of a language model in physics
-exercises mathguard finds, split by error type. See [benchmark/README.md](benchmark/README.md).
+exercises mathguard finds, split by error type. See [benchmark/README.md](https://github.com/C0MaE/mathguard/blob/main/benchmark/README.md).
+
+First results ([benchmark/RESULTS.md](https://github.com/C0MaE/mathguard/blob/main/benchmark/RESULTS.md)): of 37 calculation
+errors (algebra, numbers, units and the like) in the answers of three models,
+mathguard located 27 at the exact step (73 %), with no false alarms on 58
+correct answers. Most real errors were a wrong physical approach, which
+mathguard cannot see by design.
 
 `check_answer` was compared with hand grading on 291 final results (35 physics
 exercises, answers of Claude Haiku, qwen3 8B and llama3.2 3B). It reached a

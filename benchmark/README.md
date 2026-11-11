@@ -108,3 +108,7 @@ Suitable are exercises with an unambiguous final result (formula and/or number) 
 written in mathguard syntax. Unsuitable are sketches, pure reasoning, reading off diagrams,
 or exercises whose result is a piecewise function. Sub-exercises get their own files
 (`sheet03-ex2b`).
+
+## Results
+
+Aggregate results of the first run: [RESULTS.md](RESULTS.md).
