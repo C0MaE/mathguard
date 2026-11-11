@@ -4,6 +4,7 @@
 [![Python](https://img.shields.io/pypi/pyversions/mathguard)](https://pypi.org/project/mathguard/)
 [![tests](https://github.com/C0MaE/mathguard/actions/workflows/tests.yml/badge.svg)](https://github.com/C0MaE/mathguard/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24147173.svg)](https://doi.org/10.5281/zenodo.24147173)
 
 <!-- mcp-name: io.github.C0MaE/mathguard -->
 
@@ -385,6 +386,7 @@ Reports of wrong verdicts are the most welcome contribution. See
 
 If you use mathguard in research or teaching, please cite it. GitHub shows the
 citation under "Cite this repository" (from [CITATION.cff](CITATION.cff)).
+Releases are archived on Zenodo: [doi:10.5281/zenodo.24147173](https://doi.org/10.5281/zenodo.24147173).
 
 ## License
 
