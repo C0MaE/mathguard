@@ -27,6 +27,7 @@ import sympy as sp
 import yaml
 
 import mathguard as mg
+from mathguard.cli import _utf8_output
 from mathguard.api import verify
 from mathguard.parsing import ParseError, parse
 from mathguard.units import _ureg
@@ -543,6 +544,7 @@ def cmd_annotate(args) -> int:
 # ---------------------------------------------------------------------------- main
 
 def main(argv: list[str] | None = None) -> int:
+    _utf8_output()
     p = argparse.ArgumentParser(prog="bench", description=__doc__.splitlines()[0])
     sub = p.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("validate"); s.add_argument("--task")

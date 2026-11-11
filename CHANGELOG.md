@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+* Fix: the command line no longer fails on consoles that cannot print ✔/✘
+  (e.g. a redirected Windows console with cp1252); it writes UTF-8 there.
+* The package is marked as typed (`py.typed`), with classifiers for the
+  supported Python versions.
+* CI runs on Linux, macOS and Windows with Python 3.10 to 3.13, checks the code
+  with Ruff and builds and installs the wheel.
+* A demo GIF in the README.
+* Issue templates (wrong verdict, bug, feature), a pull request template and
+  `CONTRIBUTING.md`.
+
 ## 0.3.2
 
 * Package metadata and license list the author as C0MaE.

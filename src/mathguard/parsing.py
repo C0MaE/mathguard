@@ -10,7 +10,7 @@ a whitelisted maths function or a plain symbol.
 from __future__ import annotations
 
 import re
-from typing import Mapping
+from collections.abc import Mapping
 
 import sympy as sp
 from sympy.parsing.sympy_parser import (

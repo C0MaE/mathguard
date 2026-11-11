@@ -48,6 +48,17 @@ def _emit(report: Report, as_json: bool) -> int:
     return 0 if report.ok else 2
 
 
+def _utf8_output() -> None:
+    """Reports contain ✔/✘; write UTF-8 where the console encoding cannot show them
+    (e.g. a Windows pipe with cp1252)."""
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            "✔✘".encode(stream.encoding or "ascii")
+        except (LookupError, UnicodeEncodeError):
+            if hasattr(stream, "reconfigure"):
+                stream.reconfigure(encoding="utf-8")
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="mathguard",
                                 description="Verify mathematical claims, e.g. from LLMs.")
@@ -108,6 +119,7 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("mcp", help="run the MCP server over stdio (same as mathguard-mcp)")
 
     args = p.parse_args(argv)
+    _utf8_output()
 
     if args.cmd == "prompt":
         print(LLM_INSTRUCTIONS)
@@ -206,7 +218,7 @@ def _grade_cmd(args) -> int:
     else:
         from .answer import _ICON
         width = max([len(str(ap)) for ap, _, _ in rows] + [6])
-        for ap, tid, rep in rows:
+        for ap, _tid, rep in rows:
             correct = sum(r.ok for r in rep.results)
             print(f"{_ICON[rep.status]} {str(ap):<{width}}  {correct}/{len(rep.results)}  "
                   f"{rep.status.value}")

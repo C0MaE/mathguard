@@ -63,7 +63,7 @@ def test_cli_exit_codes(capsys, tmp_path):
     assert main(["dims", "E = m c^2", "--unit", "E=J", "--unit", "m=kg",
                  "--unit", "c=speed_of_light"]) == 0
     f = tmp_path / "c.json"
-    f.write_text(json.dumps({"check": "chain", "steps": ["(x+1)^2", "x^2 + 2x + 1"]}))
+    f.write_text(json.dumps({"check": "chain", "steps": ["(x+1)^2", "x^2 + 2x + 1"]}), encoding="utf-8")
     capsys.readouterr()  # discard earlier output
     assert main(["--json", "check", str(f)]) == 0
     assert json.loads(capsys.readouterr().out)["status"] == "verified"
@@ -77,6 +77,7 @@ def test_merged_letters_hint():
 def test_mcp_server_registers_tools():
     pytest.importorskip("mcp")
     import asyncio
+
     from mathguard.mcp_server import build_server
     server = build_server()
     tools = asyncio.run(server.list_tools())

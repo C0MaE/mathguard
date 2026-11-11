@@ -21,11 +21,12 @@ from __future__ import annotations
 import json
 import math
 import re
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from decimal import Decimal, InvalidOperation
 from enum import Enum
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 import sympy as sp
 
@@ -449,7 +450,7 @@ def _cut_prose(text: str) -> str:
                                                  "da", "es", "if", "or", "of", "to"})
 
     words = list(_WORD.finditer(" " + text))
-    for w1, w2 in zip(words, words[1:]):
+    for w1, w2 in zip(words, words[1:], strict=False):
         between = (" " + text)[w1.end():w2.start()]
         if between.strip(" ,") == "" and prose(w1.group(1)) and prose(w2.group(1)):
             return text[:w1.start() - 1].rstrip(" ,;:")

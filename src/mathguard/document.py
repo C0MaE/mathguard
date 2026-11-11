@@ -21,9 +21,10 @@ are accepted, and the report says which definitions were used.
 from __future__ import annotations
 
 import re
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from decimal import Decimal
-from typing import Any, Mapping
+from typing import Any
 
 import sympy as sp
 
@@ -159,8 +160,8 @@ class DocumentReport:
         first = self.first_error
         head = [f"**mathguard: {self.status.value.upper()}**"
                 + (f" — first error in line {first.line}" if first else ""), ""]
-        return "\n".join(head + [f"- {l}" if not l.startswith("    ") else f"  {l.strip()}"
-                                 for l in self._lines(True)])
+        return "\n".join(head + [f"- {ln}" if not ln.startswith("    ") else f"  {ln.strip()}"
+                                 for ln in self._lines(True)])
 
 
 # --------------------------------------------------------------------------

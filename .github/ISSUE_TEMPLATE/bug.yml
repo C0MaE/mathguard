@@ -1,0 +1,22 @@
+name: Bug
+description: A crash, an error message or wrong output that is not a wrong verdict.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: The command or code you ran and what you got (with the traceback, if any).
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+  - type: input
+    id: version
+    attributes:
+      label: Versions
+      description: mathguard, Python and operating system
+    validations:
+      required: true

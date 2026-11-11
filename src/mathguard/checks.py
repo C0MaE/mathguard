@@ -11,7 +11,8 @@ from __future__ import annotations
 import cmath
 import math
 import random
-from typing import Any, Mapping, Sequence
+from collections.abc import Mapping, Sequence
+from typing import Any
 
 import sympy as sp
 
@@ -388,7 +389,7 @@ def check_solutions(
         return Report([_error("solutions", exc)])
 
     verdicts: list[Verdict] = []
-    for raw, s in zip(claimed, sols):
+    for raw, s in zip(claimed, sols, strict=False):
         v = check_equal(lhs.subs(x, s), rhs.subs(x, s), assumptions,
                         label=f"{x.name} = {raw}")
         if v.ok:
