@@ -1,0 +1,35 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-em-01
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Electromagnetism
+topic: Capacitor energy
+statement: |
+  A parallel-plate capacitor in vacuum has plate area $A = 0.01\,\mathrm{m^2}$ and plate separation
+  $d = 1\,\mathrm{mm}$. It is charged to $U = 100\,\mathrm{V}$.
+  $\varepsilon_0 = 8.854\cdot10^{-12}\,\mathrm{F/m}$. How much energy is stored?
+given:
+  A: 0.01 m^2
+  d: 1 mm
+  U: 100 V
+  eps0: 8.854e-12 F/m
+assumptions:
+  A: positive
+  U: positive
+  d: positive
+  eps0: positive
+wanted:
+  Wel:
+    description: stored energy
+    unit: J
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  Wel:
+    path_a:
+      description: C U^2 / 2 with C = eps0 A / d
+      formula: eps0 A U**2 / (2 d)
+    path_b:
+      description: energy density eps0 E^2/2 times volume A d
+      formula: (eps0 * (U/d))**2 / (2 eps0) * A * d
+    value: 4.427e-07
+    rel_tol: 0.001

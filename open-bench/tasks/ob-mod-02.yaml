@@ -1,0 +1,30 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-mod-02
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Modern physics
+topic: Radioactive decay
+statement: |
+  The half-life of a radioactive isotope is $T_{1/2} = 5730$ years. After how many years has a quarter
+  ($p = 0.25$) of the original nuclei remained?
+given:
+  Th: 5730 yr
+  p: '0.25'
+assumptions:
+  Th: positive
+  p: positive
+wanted:
+  t:
+    description: elapsed time
+    unit: yr
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  t:
+    path_a:
+      description: N = N0 2^(-t/Th) solved for t
+      formula: Th log(1/p) / log(2)
+    path_b:
+      description: N = N0 exp(-lambda t) with lambda = ln 2 / Th
+      formula: -log(p) / (log(2) / Th)
+    value: 11460
+    rel_tol: 0.001

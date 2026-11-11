@@ -377,6 +377,11 @@ of the hand-graded correct results it recognised 156 of 182 as correct. The
 other results were reported as `missing` or `inconclusive`, mostly because the
 answer gave no result for that quantity or wrote it in other variables.
 
+Those exercises come from university problem sets and cannot be published.
+[`open-bench/`](https://github.com/C0MaE/mathguard/blob/main/open-bench/README.md) is a
+second set of 24 physics exercises written for this repository under CC BY 4.0, with
+checked reference solutions, so results on it can be reproduced and shared in full.
+
 ## Contributing
 
 Reports of wrong verdicts are the most welcome contribution. See

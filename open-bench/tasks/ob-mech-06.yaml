@@ -1,0 +1,35 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-mech-06
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Mechanics
+topic: Ballistic pendulum
+statement: |
+  A bullet of mass $m = 10\,\mathrm{g}$ moving horizontally at $v = 400\,\mathrm{m/s}$ gets stuck in a
+  wooden block of mass $M = 2\,\mathrm{kg}$ that hangs on a long string. How high does the block rise?
+  $g = 9.81\,\mathrm{m/s^2}$.
+given:
+  m: 10 g
+  v: 400 m/s
+  M: 2 kg
+  g: 9.81 m/s^2
+assumptions:
+  M: positive
+  g: positive
+  m: positive
+  v: positive
+wanted:
+  h:
+    description: rise of the block
+    unit: m
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  h:
+    path_a:
+      description: momentum conservation in the collision, then energy
+      formula: (m v / (m + M))**2 / (2 g)
+    path_b:
+      description: kinetic energy after the collision p^2/(2(m+M)) = (m+M) g h
+      formula: m**2 v**2 / (2 g (m + M)**2)
+    value: 0.20185
+    rel_tol: 0.001

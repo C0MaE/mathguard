@@ -54,6 +54,15 @@ RESULT
 """
 
 
+
+def set_root(root: Path) -> None:
+    """Use another task set (e.g. the open benchmark) instead of benchmark/."""
+    global TASKS, RESPONSES, ANNOTATIONS, RESULTS
+    root = root.resolve()
+    TASKS, RESPONSES = root / "tasks", root / "responses"
+    ANNOTATIONS, RESULTS = root / "annotations", root / "results"
+
+
 # --------------------------------------------------------------------------- I/O
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -450,9 +459,12 @@ def cmd_list(args) -> int:
     lines = ["| Task | Source | Topic | wanted | Reference | Status |", "|---|---|---|---|---|---|"]
     for tid, t in tasks.items():
         q = t.get("source") or {}
-        src = f"{(q.get('course') or '').split(' (')[0]} sheet {q.get('sheet')}, ex. {q.get('exercise')}"
-        if q.get("part"):
-            src += f" ({q['part']})"
+        if isinstance(q, str):
+            src = t.get("subject", "")
+        else:
+            src = f"{(q.get('course') or '').split(' (')[0]} sheet {q.get('sheet')}, ex. {q.get('exercise')}"
+            if q.get("part"):
+                src += f" ({q['part']})"
         ref = t["reference"]
         vals = []
         for name, spec in t["wanted"].items():
@@ -546,6 +558,9 @@ def cmd_annotate(args) -> int:
 def main(argv: list[str] | None = None) -> int:
     _utf8_output()
     p = argparse.ArgumentParser(prog="bench", description=__doc__.splitlines()[0])
+    p.add_argument("--root", type=Path, default=None,
+                   help="task set directory with tasks/, responses/, annotations/ "
+                        "(default: benchmark/, e.g. open-bench/ for the open set)")
     sub = p.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("validate"); s.add_argument("--task")
     s = sub.add_parser("prompts"); s.add_argument("--task"); s.add_argument("--demo", action="store_true")
@@ -556,6 +571,8 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("new"); s.add_argument("id")
     s = sub.add_parser("annotate"); s.add_argument("model"); s.add_argument("id")
     args = p.parse_args(argv)
+    if args.root is not None:
+        set_root(args.root)
     return {"validate": cmd_validate, "prompts": cmd_prompts, "evaluate": cmd_evaluate,
             "report": cmd_report, "list": cmd_list, "new": cmd_new, "annotate": cmd_annotate}[args.cmd](args)
 

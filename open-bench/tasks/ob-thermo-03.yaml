@@ -1,0 +1,33 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-thermo-03
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Thermodynamics
+topic: Carnot engine
+statement: |
+  A Carnot engine works between reservoirs at $T_h = 600\,\mathrm{K}$ and $T_c = 300\,\mathrm{K}$ and
+  takes $Q_h = 1000\,\mathrm{J}$ of heat from the hot reservoir per cycle. How much work does it deliver
+  per cycle?
+given:
+  Th: 600 K
+  Tc: 300 K
+  Qh: 1000 J
+assumptions:
+  Qh: positive
+  Tc: positive
+  Th: positive
+wanted:
+  W:
+    description: work per cycle
+    unit: J
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  W:
+    path_a:
+      description: Carnot efficiency times Qh
+      formula: Qh (1 - Tc / Th)
+    path_b:
+      description: entropy balance Qc/Tc = Qh/Th, W = Qh - Qc
+      formula: Qh - Qh Tc / Th
+    value: 500
+    rel_tol: 0.001

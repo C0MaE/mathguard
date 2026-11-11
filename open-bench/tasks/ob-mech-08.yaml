@@ -1,0 +1,45 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-mech-08
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Mechanics
+topic: Rocket equation
+statement: |
+  A rocket with initial mass $m_0 = 1000\,\mathrm{kg}$ burns fuel until its mass is
+  $m_1 = 400\,\mathrm{kg}$. The exhaust speed relative to the rocket is $u = 3000\,\mathrm{m/s}$.
+  Gravity and drag are negligible. What speed does the rocket gain?
+given:
+  m0: 1000 kg
+  m1: 400 kg
+  u: 3000 m/s
+assumptions:
+  m0: positive
+  m1: positive
+  u: positive
+wanted:
+  dv:
+    description: gain in speed
+    unit: m/s
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  dv:
+    path_a:
+      description: Tsiolkovsky rocket equation
+      formula: u log(m0 / m1)
+    path_b:
+      description: integral of u dm/m from m1 to m0
+      formula: u (log(m0) - log(m1))
+    value: 2748.9
+    rel_tol: 0.001
+    extra_checks:
+    - check: definite_integral
+      integrand: u / m
+      variable: m
+      lower: m1
+      upper: m0
+      claimed: u log(m0 / m1)
+      assumptions:
+        u: positive
+        m: positive
+        m0: positive
+        m1: positive

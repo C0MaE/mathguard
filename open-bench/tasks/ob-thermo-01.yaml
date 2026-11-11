@@ -1,0 +1,51 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-thermo-01
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Thermodynamics
+topic: Isothermal expansion
+statement: |
+  Two moles of an ideal gas expand isothermally and reversibly at $T = 300\,\mathrm{K}$ from
+  $V_1 = 10\,\mathrm{L}$ to $V_2 = 30\,\mathrm{L}$. $R = 8.314\,\mathrm{J/(mol\,K)}$.
+  How much work does the gas do?
+given:
+  n: 2 mol
+  T: 300 K
+  V1: 10 L
+  V2: 30 L
+  R: 8.314 J/(mol K)
+assumptions:
+  R: positive
+  T: positive
+  V1: positive
+  V2: positive
+  n: positive
+wanted:
+  W:
+    description: work done by the gas
+    unit: J
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  W:
+    path_a:
+      description: integral of p dV with p = n R T / V
+      formula: n R T log(V2 / V1)
+    path_b:
+      description: difference of logarithms
+      formula: n R T (log(V2) - log(V1))
+    value: 5479.9
+    rel_tol: 0.001
+    extra_checks:
+    - check: definite_integral
+      integrand: n R T / V
+      variable: V
+      lower: V1
+      upper: V2
+      claimed: n R T log(V2 / V1)
+      assumptions:
+        n: positive
+        R: positive
+        T: positive
+        V: positive
+        V1: positive
+        V2: positive

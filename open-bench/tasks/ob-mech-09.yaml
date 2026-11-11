@@ -1,0 +1,36 @@
+# Open benchmark task, CC BY 4.0 (see open-bench/LICENSE).
+id: ob-mech-09
+source: written for the mathguard open benchmark (CC BY 4.0)
+subject: Mechanics
+topic: Torricelli's law
+statement: |
+  An open water tank is filled to a height $H = 2\,\mathrm{m}$ above a small hole of area
+  $A = 1\,\mathrm{cm^2}$ in its side. Neglect friction and assume the tank is much wider than the hole;
+  $g = 9.81\,\mathrm{m/s^2}$. How many litres per second flow out?
+given:
+  H: 2 m
+  A: 1 cm^2
+  g: 9.81 m/s^2
+auxiliary:
+  rho: kg/m^3
+assumptions:
+  A: positive
+  H: positive
+  g: positive
+  rho: positive
+wanted:
+  Qv:
+    description: volume flow rate
+    unit: L/s
+reference:
+  status: checked
+  checked_by: two independent paths, bench.py validate
+  Qv:
+    path_a:
+      description: Torricelli's law
+      formula: A sqrt(2 g H)
+    path_b:
+      description: 'Bernoulli: rho g H = rho v^2/2, then Q = A v'
+      formula: A sqrt(2 rho g H / rho)
+    value: 0.62642
+    rel_tol: 0.001
