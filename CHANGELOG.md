@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+* Claude Desktop extension: `mcpb/` holds an MCP Bundle (`.mcpb`, `uv` runtime)
+  that installs the MCP server with one click; the publish workflow attaches
+  `mathguard.mcpb` to every GitHub release.
+* Browser demo: `space/` is a Gradio app for a Hugging Face Space (grade an
+  answer, check a worked solution).
+* README: a `check_answer` example at the top.
+
 ## 0.4.0
 
 * Inspect AI scorer: `mathguard.inspect_scorer.mathguard_scorer()` grades final

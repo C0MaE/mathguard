@@ -1,0 +1,44 @@
+{
+  "manifest_version": "0.4",
+  "name": "mathguard",
+  "display_name": "mathguard",
+  "version": "0.4.0",
+  "description": "Verify the maths in answers: identities, derivations, units, worked solutions and graded results, with SymPy and Pint.",
+  "long_description": "mathguard checks mathematical claims deterministically instead of trusting the model. It finds the first wrong step in a worked solution (Markdown with LaTeX), checks identities, derivatives, integrals and units with a concrete counterexample when they fail, and grades final answers against a reference: formulas symbolically, numbers with unit conversion and rounding.",
+  "author": {
+    "name": "C0MaE",
+    "url": "https://github.com/C0MaE"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/C0MaE/mathguard"
+  },
+  "homepage": "https://github.com/C0MaE/mathguard",
+  "documentation": "https://github.com/C0MaE/mathguard#readme",
+  "support": "https://github.com/C0MaE/mathguard/issues",
+  "icon": "icon.png",
+  "server": {
+    "type": "uv",
+    "entry_point": "src/server.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": ["run", "--directory", "${__dirname}", "src/server.py"]
+    }
+  },
+  "tools": [
+    {"name": "check_solution", "description": "Check a whole worked solution (Markdown with LaTeX) step by step and report the first wrong line."},
+    {"name": "check_answer", "description": "Grade the final results of an answer against a reference: formulas symbolically, numbers with units and rounding."},
+    {"name": "check_derivation", "description": "Check a derivation step by step; reports which step is wrong."},
+    {"name": "check_identity", "description": "Check that two expressions are equal for all values, with a counterexample if not."},
+    {"name": "check_units", "description": "Check an equation for dimensional consistency."},
+    {"name": "verify_math", "description": "Run several checks at once: equal, chain, derivative, antiderivative, definite_integral, solutions, value, limit, dimensions."}
+  ],
+  "compatibility": {
+    "platforms": ["darwin", "linux", "win32"],
+    "runtimes": {
+      "python": ">=3.10"
+    }
+  },
+  "keywords": ["math", "verification", "sympy", "units", "physics", "grading", "llm"],
+  "license": "MIT"
+}

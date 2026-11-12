@@ -35,6 +35,18 @@ out reliably. `mathguard` is a small verification layer built on SymPy and Pint:
 Overall: REFUTED
 ```
 
+Or grade a model's answer against a reference result in one call:
+
+```python
+>>> print(mg.check_answer("v = sqrt(g h) = 3.43 m/s", "v = sqrt(2 g h)",
+...                       given={"h": "1.2 m", "g": "9.81 m/s^2"}))
+mathguard answer check: 0/1 correct
+
+✘ v (line 1): wrong — formula sqrt(g h) differs from the reference sqrt(2 g h); value 3.43 m/s differs from 4.85222 m/s by 29.3% (±1 %)
+
+Overall: WRONG
+```
+
 ### Grade answers against a reference (new in 0.3)
 
 A task file holds the reference results and the known values:
@@ -269,6 +281,13 @@ Exit codes: `0` all good (or all correct), `1` something was refuted (or wrong),
 goes before the command (`mathguard --json grade …`).
 
 ### MCP server (Claude Desktop, Claude Code, …)
+
+**Claude Desktop, one click:** download
+[`mathguard.mcpb`](https://github.com/C0MaE/mathguard/releases/latest/download/mathguard.mcpb)
+from the latest release and open it (or drag it into *Settings → Extensions*).
+Claude Desktop installs mathguard from PyPI with its bundled `uv`; no Python setup needed.
+
+For other clients:
 
 ```bash
 pip install mathguard

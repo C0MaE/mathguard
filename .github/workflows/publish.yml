@@ -33,6 +33,23 @@ jobs:
           path: dist/
       - uses: pypa/gh-action-pypi-publish@release/v1
 
+  mcpb:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npx -y @anthropic-ai/mcpb@2.1.2 validate mcpb/manifest.json
+      - run: npx -y @anthropic-ai/mcpb@2.1.2 pack mcpb mathguard.mcpb
+      - run: gh release upload "$TAG" mathguard.mcpb --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+
   mcp-registry:
     needs: pypi
     runs-on: ubuntu-latest
