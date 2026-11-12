@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+* Claude Desktop extension: `mcpb/` holds an MCP Bundle (`.mcpb`, `uv` runtime)
+  that installs the MCP server with one click; the publish workflow attaches
+  `mathguard.mcpb` to every GitHub release.
+* Browser demo: `space/index.html` grades answers and checks worked solutions
+  entirely in the browser (Pyodide), as a static Hugging Face Space.
+* Fix: time limits are skipped where `signal.setitimer` is missing (Pyodide)
+  instead of failing.
+* README: a `check_answer` example at the top.
+
 ## 0.4.0
 
 * Inspect AI scorer: `mathguard.inspect_scorer.mathguard_scorer()` grades final

@@ -1,7 +1,8 @@
 """Run a function with a wall-clock limit (best effort).
 
 ``simplify`` and friends can occasionally take minutes. On Unix in the main
-thread we use ``SIGALRM``; elsewhere the call simply runs without a limit.
+thread we use ``SIGALRM``; elsewhere (Windows, threads, Pyodide in the
+browser) the call simply runs without a limit.
 """
 
 from __future__ import annotations
@@ -24,6 +25,7 @@ def time_limit(seconds: float) -> Iterator[None]:
     usable = (
         seconds > 0
         and hasattr(signal, "SIGALRM")
+        and hasattr(signal, "setitimer")  # missing in Pyodide (WebAssembly)
         and threading.current_thread() is threading.main_thread()
     )
     if not usable:

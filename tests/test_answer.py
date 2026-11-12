@@ -245,3 +245,13 @@ def test_grade_with_benchmark_task_format():
                             "rel_tol": 1e-4}},
     }
     assert mg.grade(task, "v = 4.1 m/s", steps=False).ok
+
+
+def test_time_limit_without_setitimer(monkeypatch):
+    """Pyodide has SIGALRM but no setitimer; the limit is then skipped."""
+    import signal
+
+    from mathguard import _timeout
+
+    monkeypatch.delattr(signal, "setitimer", raising=False)
+    assert _timeout.run_with_limit(lambda: 42, 1.0) == 42
