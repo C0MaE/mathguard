@@ -19,6 +19,5 @@ Deterministic, no LLM involved. The page loads Python in the browser with
 
 Source and docs: https://github.com/C0MaE/mathguard
 
-The same `index.html` is published on GitHub Pages by `.github/workflows/pages.yml`.
-For a Hugging Face Space, create a Space with the *Static* SDK and upload
+To deploy, create a Hugging Face Space with the *Static* SDK and upload
 `index.html` and this `README.md` (its header configures the Space).
