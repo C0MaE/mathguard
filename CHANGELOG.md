@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Inspect AI scorer: `mathguard.inspect_scorer.mathguard_scorer()` grades final
+  answers in Inspect evaluations; `inspect eval mathguard/open_bench` runs the
+  open benchmark, whose task files now ship with the package. Extra `inspect`.
 * Open benchmark: 24 physics exercises written for this repository, licensed
   CC BY 4.0, with checked two-path reference solutions (`open-bench/`).
   `bench.py --root open-bench ...` runs the benchmark tools on it.

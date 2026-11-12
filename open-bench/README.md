@@ -39,6 +39,13 @@ task = mg.load_task("open-bench/tasks/ob-mech-02.yaml")
 print(mg.grade(task, "a = (m1 - m2) g / (m1 + m2) = 1.96 m/s^2\nF = 23.5 N"))
 ```
 
+With [Inspect AI](https://inspect.aisi.org.uk) (`pip install "mathguard[inspect]"`) the whole set
+runs against any model, graded by mathguard:
+
+```bash
+inspect eval mathguard/open_bench --model anthropic/claude-haiku-5-5
+```
+
 ## Why a second task set
 
 The main benchmark uses exercises from university problem sets. Their texts are copyrighted,
