@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mathguard demo</title>
+<meta name="description" content="Verify the maths in LLM answers with SymPy and Pint, running entirely in your browser.">
+<style>
+  :root {
+    --bg: #f7f7fb; --panel: #ffffff; --text: #1d1d2b; --muted: #5d5d73; --line: #dcdce6;
+    --accent: #312e81; --accent-text: #ffffff; --ok: #15803d; --bad: #b91c1c; --warn: #a16207;
+    --code: #eef0f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12121a; --panel: #1b1b26; --text: #e8e8f0; --muted: #a0a0b4; --line: #2e2e3d;
+      --accent: #818cf8; --accent-text: #12121a; --ok: #4ade80; --bad: #f87171; --warn: #fbbf24;
+      --code: #262635;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12121a; --panel: #1b1b26; --text: #e8e8f0; --muted: #a0a0b4; --line: #2e2e3d;
+    --accent: #818cf8; --accent-text: #12121a; --ok: #4ade80; --bad: #f87171; --warn: #fbbf24;
+    --code: #262635;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { margin: 0 0 4px; font-size: 26px; }
+  .lead { color: var(--muted); margin: 0 0 18px; }
+  .lead a { color: var(--accent); }
+  code, textarea { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  code { background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: 0.92em; }
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
+  .tabs button { background: none; border: none; color: var(--muted); font: inherit; padding: 8px 12px;
+                 cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tabs button[aria-selected="true"] { color: var(--text); border-color: var(--accent); font-weight: 600; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+  @media (max-width: 800px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+  label { display: block; font-size: 13px; color: var(--muted); margin: 10px 0 4px; }
+  label:first-child { margin-top: 0; }
+  textarea { width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--line);
+             border-radius: 6px; padding: 8px; font-size: 13px; resize: vertical; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 500px) { .row { grid-template-columns: 1fr; } }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
+  .primary { background: var(--accent); color: var(--accent-text); border: none; border-radius: 6px;
+             padding: 9px 18px; font: inherit; font-weight: 600; cursor: pointer; }
+  .primary:disabled { opacity: 0.5; cursor: wait; }
+  .examples { margin-top: 12px; font-size: 13px; color: var(--muted); }
+  .examples button { background: none; border: 1px solid var(--line); color: var(--text); border-radius: 999px;
+                     padding: 3px 10px; margin: 4px 4px 0 0; font: inherit; cursor: pointer; }
+  .tol { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+  .tol input { width: 64px; background: var(--bg); color: var(--text); border: 1px solid var(--line);
+               border-radius: 6px; padding: 4px 6px; font: inherit; }
+  .result { min-height: 120px; overflow-wrap: anywhere; }
+  .result .verdict { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .result ul { margin: 0; padding-left: 0; list-style: none; }
+  .result li { padding: 6px 0; border-top: 1px solid var(--line); }
+  .result .sub { color: var(--muted); font-size: 13px; padding-left: 18px; }
+  .ok { color: var(--ok); } .bad { color: var(--bad); } .warn { color: var(--warn); }
+  .status { color: var(--muted); font-size: 13px; }
+  footer { margin-top: 28px; color: var(--muted); font-size: 13px; }
+  footer a { color: var(--accent); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>mathguard</h1>
+  <p class="lead">Verify the maths in an answer, deterministically with SymPy and Pint. No LLM involved, and
+    everything runs in your browser. Formulas are compared symbolically, numbers with unit conversion and rounding.
+    <a href="https://github.com/C0MaE/mathguard">GitHub</a> · <code>pip install mathguard</code></p>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="grade">Grade an answer</button>
+    <button role="tab" aria-selected="false" data-tab="doc">Check a worked solution</button>
+  </div>
+
+  <section id="tab-grade" class="grid">
+    <div class="panel">
+      <label for="answer">Answer (plain text, Markdown or LaTeX)</label>
+      <textarea id="answer" rows="11"></textarea>
+      <label for="reference">Reference (one result per line)</label>
+      <textarea id="reference" rows="2" placeholder="v = sqrt(2 g h)"></textarea>
+      <div class="row">
+        <div><label for="given">Known values</label>
+          <textarea id="given" rows="3" placeholder="h = 1.2 m&#10;g = 9.81 m/s^2"></textarea></div>
+        <div><label for="units">Units of symbols without value</label>
+          <textarea id="units" rows="3" placeholder="m = kg"></textarea></div>
+      </div>
+      <div class="actions">
+        <button class="primary" id="grade-btn" disabled>Grade</button>
+        <span class="tol"><label for="tol" style="margin:0">min. tolerance</label>
+          <input id="tol" type="number" min="0.1" max="20" step="0.1" value="1"> %</span>
+      </div>
+      <div class="examples">Examples:
+        <button data-ex="0">rolling sphere, wrong</button>
+        <button data-ex="1">rolling sphere, right (other units)</button>
+        <button data-ex="2">free fall, wrong</button>
+      </div>
+    </div>
+    <div class="panel result" id="grade-out"><span class="status">Pick an example or paste an answer.</span></div>
+  </section>
+
+  <section id="tab-doc" class="grid" hidden>
+    <div class="panel">
+      <label for="doc">Worked solution (Markdown with LaTeX)</label>
+      <textarea id="doc" rows="16"></textarea>
+      <label for="doc-units">Units of symbols (optional)</label>
+      <textarea id="doc-units" rows="2" placeholder="m = kg"></textarea>
+      <div class="actions"><button class="primary" id="doc-btn" disabled>Check every step</button></div>
+      <div class="examples">Examples:
+        <button data-doc="0">algebra slip</button>
+        <button data-doc="1">rolling sphere</button>
+      </div>
+    </div>
+    <div class="panel result" id="doc-out"><span class="status">Pick an example or paste a solution.</span></div>
+  </section>
+
+  <p class="status" id="load-status">Loading Python in your browser (first visit takes about 10–20 s)…</p>
+  <footer>mathguard is MIT licensed. Cite it via
+    <a href="https://doi.org/10.5281/zenodo.24147172">doi:10.5281/zenodo.24147172</a>.
+    Also available as a Python package, CLI, MCP server, agent skill and Inspect AI scorer.</footer>
+</main>
+
+<script>
+const MATHGUARD = "mathguard==0.4.0";
+const PYODIDE = new URLSearchParams(location.search).get("pyodide")
+  || "https://cdn.jsdelivr.net/pyodide/v0.27.2/full/";
+
+const ROLLING_WRONG = String.raw`Energy conservation including the rotation, with $I = \tfrac{2}{5} m r^2$ and $\omega = v/r$:
+
+$$ m g h = \tfrac12 m v^2 + \tfrac12 I \omega^2 = \tfrac12 m v^2 + \tfrac15 m v^2 = \tfrac{7}{10} m v^2 $$
+
+Solving for the speed:
+
+$$ v^2 = \tfrac{7}{10} g h \quad\Rightarrow\quad v = \sqrt{\tfrac{7 g h}{10}} $$
+
+With numbers: $v = \sqrt{0.7 \cdot 9.81 \cdot 1.2}\,\mathrm{m/s} \approx 2.87\,\mathrm{m/s}$.
+
+The time follows from the mean speed: $t = \frac{2L}{v} \approx 2.09\,\mathrm{s}$.`;
+
+const ROLLING_RIGHT = `Energy conservation with the rotational energy of the sphere (I = 2/5 m r^2):
+
+m g h = 1/2 m v^2 + 1/2 I ω^2 = 7/10 m v^2, so v = √(10 g h / 7).
+
+The speed grows linearly along the slope, so the mean speed is v/2 and
+T = 2 L / v.
+
+Result: v ≈ 14.8 km/h, T = 1.46 s.`;
+
+const ROLLING_GIVEN = "h = 1.2 m\nL = 3 m\ng = 9.81 m/s^2";
+const EXAMPLES = [
+  [ROLLING_WRONG, "v = sqrt(10 g h / 7)\nt = 2 L / sqrt(10 g h / 7)", ROLLING_GIVEN, "m = kg\nr = m"],
+  [ROLLING_RIGHT, "v = sqrt(10 g h / 7)\nT = 2 L / sqrt(10 g h / 7)", ROLLING_GIVEN, "m = kg\nr = m"],
+  ["Energy conservation: m g h = 1/2 m v^2, so\nv = sqrt(g h) = 3.43 m/s", "v = sqrt(2 g h)",
+   "h = 1.2 m\ng = 9.81 m/s^2", "m = kg"],
+];
+const DOCS = [
+  ["We simplify the expression step by step:\n\n$$ (x+1)^2 - (x-1)^2 = x^2 + 2x + 1 - (x^2 - 2x + 1) = 4x + 2 $$", ""],
+  [ROLLING_WRONG, "m = kg\nr = m"],
+];
+
+const PY_GLUE = `
+import contextlib
+import mathguard as mg
+import mathguard._timeout
+
+# mathguard < 0.4.1 uses signal.setitimer for time limits, which Pyodide lacks
+mathguard._timeout.time_limit = lambda seconds: contextlib.nullcontext()
+
+def _pairs(text):
+    out = {}
+    for line in (text or "").splitlines():
+        line = line.split("#", 1)[0].strip().rstrip(",")
+        if not line:
+            continue
+        for sep in ("=", ":"):
+            if sep in line:
+                key, value = line.split(sep, 1)
+                out[key.strip()] = value.strip()
+                break
+        else:
+            raise ValueError(f"cannot read '{line}': write one 'name = value' per line")
+    return out or None
+
+def run_grade(answer, reference, given, units, tol):
+    try:
+        return mg.check_answer(answer, reference, given=_pairs(given), units=_pairs(units),
+                               rel_tol=float(tol) / 100).to_markdown()
+    except Exception as exc:
+        return f"**Error** {type(exc).__name__}: {exc}"
+
+def run_doc(text, units):
+    try:
+        return mg.check_document(text, units=_pairs(units)).to_markdown()
+    except Exception as exc:
+        return f"**Error** {type(exc).__name__}: {exc}"
+`;
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const inline = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/`([^`]+)`/g, "<code>$1</code>");
+
+function render(md) {
+  const lines = md.split("\n");
+  let html = "", open = false;
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    if (line.startsWith("- ")) {
+      if (!open) { html += "<ul>"; open = true; } else html += "</li>";
+      const body = line.slice(2);
+      const cls = body.startsWith("✔") ? "ok" : body.startsWith("✘") ? "bad" : body.startsWith("∅") ? "warn" : "";
+      html += `<li><span class="${cls}">${inline(body.slice(0, 1))}</span>${inline(body.slice(1))}`;
+    } else if (/^\s/.test(line) && open) {
+      html += `<div class="sub">${inline(line.trim())}</div>`;
+    } else {
+      if (open) { html += "</li></ul>"; open = false; }
+      const v = line.match(/\*\*mathguard: (\w+)\*\*/);
+      const word = v ? v[1] : "";
+      const cls = /^(CORRECT|VERIFIED)$/.test(word) ? "ok" : /^(WRONG|REFUTED)$/.test(word) ? "bad"
+                : line.startsWith("**Error**") ? "bad" : "warn";
+      html += `<div class="verdict ${cls}">${inline(line)}</div>`;
+    }
+  }
+  if (open) html += "</li></ul>";
+  return html;
+}
+
+let py = null;
+async function boot() {
+  try {
+    await new Promise((ok, fail) => {
+      const s = document.createElement("script");
+      s.src = PYODIDE + "pyodide.js"; s.onload = ok; s.onerror = () => fail(new Error("could not load Pyodide"));
+      document.head.appendChild(s);
+    });
+    const pyodide = await loadPyodide({ indexURL: PYODIDE });
+    await pyodide.loadPackage(["micropip", "sympy", "pyyaml"]);
+    // The MCP server is not needed in the browser, so its dependency is mocked.
+    await pyodide.runPythonAsync(`
+import micropip
+micropip.add_mock_package("mcp", "1.2.0")
+await micropip.install(["pint", "${MATHGUARD}"])
+`);
+    await pyodide.runPythonAsync(PY_GLUE);
+    py = pyodide;
+    $("load-status").textContent = "Ready. " + pyodide.runPython("mg.__version__ and f'mathguard {mg.__version__}'")
+      + " runs in your browser.";
+    $("grade-btn").disabled = false; $("doc-btn").disabled = false;
+  } catch (e) {
+    $("load-status").textContent = "Loading failed: " + e.message;
+  }
+}
+
+function call(name, args) {
+  const fn = py.globals.get(name);
+  try { return fn(...args); } finally { fn.destroy(); }
+}
+
+$("grade-btn").onclick = () => {
+  $("grade-out").innerHTML = '<span class="status">Checking…</span>';
+  setTimeout(() => {
+    $("grade-out").innerHTML = render(call("run_grade",
+      [$("answer").value, $("reference").value, $("given").value, $("units").value, $("tol").value]));
+  }, 20);
+};
+$("doc-btn").onclick = () => {
+  $("doc-out").innerHTML = '<span class="status">Checking…</span>';
+  setTimeout(() => { $("doc-out").innerHTML = render(call("run_doc", [$("doc").value, $("doc-units").value])); }, 20);
+};
+
+document.querySelectorAll("[data-ex]").forEach((b) => b.onclick = () => {
+  const [a, r, g, u] = EXAMPLES[+b.dataset.ex];
+  $("answer").value = a; $("reference").value = r; $("given").value = g; $("units").value = u;
+  if (py) $("grade-btn").click();
+});
+document.querySelectorAll("[data-doc]").forEach((b) => b.onclick = () => {
+  const [t, u] = DOCS[+b.dataset.doc];
+  $("doc").value = t; $("doc-units").value = u;
+  if (py) $("doc-btn").click();
+});
+document.querySelectorAll("[role=tab]").forEach((t) => t.onclick = () => {
+  document.querySelectorAll("[role=tab]").forEach((x) => x.setAttribute("aria-selected", x === t));
+  $("tab-grade").hidden = t.dataset.tab !== "grade";
+  $("tab-doc").hidden = t.dataset.tab !== "doc";
+});
+
+boot();
+</script>
+</body>
+</html>

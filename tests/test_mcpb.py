@@ -21,3 +21,8 @@ def test_mcpb_tools_exist_in_server():
     source = (ROOT / "src" / "mathguard" / "mcp_server.py").read_text(encoding="utf-8")
     for tool in manifest["tools"]:
         assert f"def {tool['name']}(" in source
+
+
+def test_browser_demo_pins_package_version():
+    page = (ROOT / "space" / "index.html").read_text(encoding="utf-8")
+    assert f'"mathguard=={mathguard.__version__}"' in page

@@ -5,8 +5,11 @@
 * Claude Desktop extension: `mcpb/` holds an MCP Bundle (`.mcpb`, `uv` runtime)
   that installs the MCP server with one click; the publish workflow attaches
   `mathguard.mcpb` to every GitHub release.
-* Browser demo: `space/` is a Gradio app for a Hugging Face Space (grade an
-  answer, check a worked solution).
+* Browser demo: `space/index.html` grades answers and checks worked solutions
+  entirely in the browser (Pyodide); published on GitHub Pages and usable as a
+  static Hugging Face Space.
+* Fix: time limits are skipped where `signal.setitimer` is missing (Pyodide)
+  instead of failing.
 * README: a `check_answer` example at the top.
 
 ## 0.4.0
