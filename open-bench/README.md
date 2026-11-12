@@ -17,6 +17,8 @@ the stated number.
 | Optics and waves | 4 |
 | Modern physics | 2 |
 
+Results for three models, with all answers and annotations: [RESULTS.md](RESULTS.md).
+
 ## Usage
 
 ```bash

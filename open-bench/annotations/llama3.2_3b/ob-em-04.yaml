@@ -1,0 +1,26 @@
+task: ob-em-04
+model: llama3.2_3b
+final:
+  rc:
+    formula: mp v / (q B)
+    value: 0.2087
+errors:
+- type: numeric
+  step: 29
+  note: 1.6726e-21 / 8.01e-20 = 0.02088, not 0.2087 (factor 10)
+checks:
+- step: 23
+  check: value
+  expression: 1.6726e-27 * 1e6
+  claimed: 1.6726e-21
+  rel_tol: 0.002
+- step: 26
+  check: value
+  expression: 1.602e-19 * 0.5
+  claimed: 8.01e-20
+  rel_tol: 0.002
+- step: 29
+  check: value
+  expression: 1.6726e-21 / 8.01e-20
+  claimed: 0.2087
+  rel_tol: 0.002

@@ -1,0 +1,8 @@
+task: ob-opt-02
+model: haiku
+final:
+  theta:
+    formula: arcsin(n2 / n1)
+    value: 41.8
+errors: []
+checks: []

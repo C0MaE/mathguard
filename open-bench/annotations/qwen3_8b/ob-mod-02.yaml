@@ -1,0 +1,9 @@
+task: ob-mod-02
+model: qwen3_8b
+final:
+  t:
+    formula: null
+    value: 11460.0
+    formula_as_written: 2 * T12
+errors: []
+checks: []

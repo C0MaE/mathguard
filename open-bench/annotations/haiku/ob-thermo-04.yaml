@@ -1,0 +1,8 @@
+task: ob-thermo-04
+model: haiku
+final:
+  T2:
+    formula: T1 * (V1 / V2)^(gamma - 1)
+    value: 754.0
+errors: []
+checks: []

@@ -1,0 +1,9 @@
+task: ob-mech-01
+model: llama3.2_3b
+final:
+  x:
+    formula: null
+    value: 16.08
+    formula_as_written: (8 m/s)(2.01 s)
+errors: []
+checks: []

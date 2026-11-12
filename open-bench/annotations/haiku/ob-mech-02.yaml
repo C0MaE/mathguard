@@ -1,0 +1,11 @@
+task: ob-mech-02
+model: haiku
+final:
+  a:
+    formula: (m1 - m2) g / (m1 + m2)
+    value: 1.96
+  F:
+    formula: 2 m1 m2 g / (m1 + m2)
+    value: 23.5
+errors: []
+checks: []

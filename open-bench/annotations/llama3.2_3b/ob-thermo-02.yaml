@@ -1,0 +1,26 @@
+task: ob-thermo-02
+model: llama3.2_3b
+final:
+  Tf:
+    formula: null
+    value: 76.53
+errors:
+- type: numeric
+  step: 22
+  note: 836.8 * 353.15 = 295516, not 72286 (and 1252.8 * 293.15 = 367258, not 87546)
+checks:
+- step: 22
+  check: value
+  expression: 836.8 * 353.15
+  claimed: 72286
+  rel_tol: 0.002
+- step: 22
+  check: value
+  expression: 1252.8 * 293.15
+  claimed: 87546
+  rel_tol: 0.002
+- step: 34
+  check: value
+  expression: 159832 / 2089
+  claimed: 76.53
+  rel_tol: 0.002

@@ -1,0 +1,8 @@
+task: ob-thermo-01
+model: haiku
+final:
+  W:
+    formula: n R T ln(V2 / V1)
+    value: 5480.0
+errors: []
+checks: []

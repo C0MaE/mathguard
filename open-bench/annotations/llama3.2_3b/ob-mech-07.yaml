@@ -1,0 +1,22 @@
+task: ob-mech-07
+model: llama3.2_3b
+final:
+  T:
+    formula: 2 pi sqrt(1/g)
+    value: 1.99
+errors:
+- type: approach
+  step: 3
+  note: simple-pendulum formula for a physical pendulum (rod pivoted at its end)
+- type: numeric
+  step: 12
+  note: 2 pi sqrt(1/9.81) = 2.006 s, not 1.99 s (sqrt(0.101) rounded to 0.316)
+- type: units
+  step: final
+  note: result formula 2 pi sqrt(1/g) has L = 1 m inserted as a bare 1
+checks:
+- step: 12
+  check: value
+  expression: 2 * pi * sqrt(1 / 9.81)
+  claimed: 1.99
+  rel_tol: 0.005

@@ -1,0 +1,8 @@
+task: ob-wave-01
+model: llama3.2_3b
+final:
+  f:
+    formula: null
+    value: 91.3
+errors: []
+checks: []

@@ -1,0 +1,16 @@
+task: ob-mod-02
+model: llama3.2_3b
+final:
+  t:
+    formula: -log(p) / log(2) * Th
+    value: 15000
+errors:
+- type: numeric
+  step: 46
+  note: log(0.25)/(-log 2) * 5730 = 11460, not 15000
+checks:
+- step: 46
+  check: value
+  expression: log(0.25) / (-log(2)) * 5730
+  claimed: 15000
+  rel_tol: 0.002

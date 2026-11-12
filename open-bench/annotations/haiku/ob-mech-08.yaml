@@ -1,0 +1,8 @@
+task: ob-mech-08
+model: haiku
+final:
+  dv:
+    formula: u * ln(m0 / m1)
+    value: 2750.0
+errors: []
+checks: []

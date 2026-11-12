@@ -1,0 +1,9 @@
+task: ob-mech-05
+model: llama3.2_3b
+final:
+  h:
+    formula: null
+    value: 2.04
+    formula_as_written: (v^2) / (2g)
+errors: []
+checks: []

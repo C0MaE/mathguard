@@ -1,0 +1,8 @@
+task: ob-mech-09
+model: haiku
+final:
+  Qv:
+    formula: A sqrt(2 g H)
+    value: 0.626
+errors: []
+checks: []

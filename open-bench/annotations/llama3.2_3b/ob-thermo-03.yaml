@@ -1,0 +1,8 @@
+task: ob-thermo-03
+model: llama3.2_3b
+final:
+  W:
+    formula: null
+    value: 500.0
+errors: []
+checks: []

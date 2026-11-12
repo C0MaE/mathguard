@@ -1,0 +1,8 @@
+task: ob-mech-06
+model: haiku
+final:
+  h:
+    formula: (m v / (m + M))^2 / (2 g)
+    value: 0.202
+errors: []
+checks: []

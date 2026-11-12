@@ -1,0 +1,29 @@
+task: ob-mech-08
+model: llama3.2_3b
+final:
+  dv:
+    formula: null
+    value: 2975
+errors:
+- type: approach
+  step: 13
+  note: momentum balance m0 - m1 u is dimensionally wrong (kg minus kg m/s)
+- type: numeric
+  step: 25
+  note: 1000 - 1200000 = -1199000, not -1190000
+checks:
+- step: 23
+  check: value
+  expression: 400 * 3000
+  claimed: 1200000
+  rel_tol: 0.002
+- step: 25
+  check: value
+  expression: 1000 - 1200000
+  claimed: -1190000
+  rel_tol: 0.002
+- step: 27
+  check: value
+  expression: -1190000 / 400
+  claimed: -2975
+  rel_tol: 0.002

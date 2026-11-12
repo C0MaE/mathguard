@@ -1,0 +1,9 @@
+task: ob-opt-01
+model: haiku
+final:
+  b:
+    formula: null
+    value: 30.0
+    formula_as_written: 1/30 cm^-1
+errors: []
+checks: []

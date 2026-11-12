@@ -1,0 +1,8 @@
+task: ob-mech-03
+model: haiku
+final:
+  a:
+    formula: g (sin(alpha) - mu cos(alpha))
+    value: 3.21
+errors: []
+checks: []

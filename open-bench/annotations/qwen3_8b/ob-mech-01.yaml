@@ -1,0 +1,11 @@
+task: ob-mech-01
+model: qwen3_8b
+final:
+  x:
+    formula: null
+    value: null
+errors:
+- type: other
+  step: 0
+  note: 'no answer: the reasoning used up the 8000-token limit, the reply was empty'
+checks: []

@@ -49,6 +49,34 @@ def test_given_numbers_inserted_into_a_formula():
     assert r.ok
 
 
+def test_result_named_after_a_given_quantity():
+    # regression: "Wel = U = 4.95 J" with U given crashed in the comparison
+    r = grade_of("Wel = U = 4.95 J", {"Wel": "eps0 A U^2 / (2 d)"},
+                 given={"A": "0.01 m^2", "d": "1 mm", "U": "100 V", "eps0": "8.854e-12 F/m"})
+    assert r.status == mg.Grade.WRONG
+
+
+def test_greek_letter_as_plain_label():
+    assert grade_of("RESULT\nθ [critical angle] = 41.8 deg", {"theta": "41.81 deg"}).ok
+
+
+def test_given_symbol_written_after_a_number():
+    # "0.3268g" is 0.3268 times g, not grams; "m/s^2" stays a unit even if m and s are variables
+    r = grade_of("a = 0.3268g = 3.22 m/s^2", {"a": "g (sin(alpha) - mu cos(alpha))"},
+                 given={"g": "9.81 m/s^2", "alpha": "30 deg", "mu": "0.2"},
+                 units={"m": "kg", "s": "m"})
+    assert r.ok
+    # but "2.04 m" is metres even if the task has a mass m
+    assert grade_of("h = 2.04 m", {"h": "k d^2 / (2 m g)"}, given={"k": "200 N/m", "d": "10 cm",
+                    "m": "50 g", "g": "9.81 m/s^2"}).ok
+
+
+def test_escaped_asterisk_and_thousands_separator():
+    r = grade_of(r"B = 1.006 \* 10^(-3) T", {"B": "4e-5 T"})
+    assert r.status == mg.Grade.WRONG and r["B"].extracted.value == pytest.approx(1.006e-3)
+    assert grade_of("T = 38,794.8 s", {"T": "38795 s"}).ok
+
+
 def test_other_variables_are_not_judged():
     r = grade_of("v = sqrt(2 g s sin(alpha))", "v = sqrt(2 g h)")
     assert r.status == mg.Grade.INCONCLUSIVE

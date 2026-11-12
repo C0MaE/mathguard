@@ -1,0 +1,8 @@
+task: ob-em-03
+model: haiku
+final:
+  B:
+    formula: mu0 * I / (2 * pi * r)
+    value: 4.0e-05
+errors: []
+checks: []

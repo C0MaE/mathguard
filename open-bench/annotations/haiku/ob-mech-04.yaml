@@ -1,0 +1,8 @@
+task: ob-mech-04
+model: haiku
+final:
+  T:
+    formula: 2 pi sqrt((RE + h)^3 / (G ME))
+    value: 5550.0
+errors: []
+checks: []

@@ -1,0 +1,8 @@
+task: ob-mod-01
+model: haiku
+final:
+  Ekin:
+    formula: -WA + c*h/lam
+    value: 0.66
+errors: []
+checks: []
