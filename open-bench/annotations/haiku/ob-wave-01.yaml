@@ -1,0 +1,8 @@
+task: ob-wave-01
+model: haiku
+final:
+  f:
+    formula: (1 / (2 L)) * sqrt(F / mu)
+    value: 91.0
+errors: []
+checks: []

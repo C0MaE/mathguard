@@ -1,0 +1,9 @@
+task: ob-em-04
+model: haiku
+final:
+  rc:
+    formula: null
+    value: 0.0209
+    formula_as_written: m * v / (q * B)
+errors: []
+checks: []

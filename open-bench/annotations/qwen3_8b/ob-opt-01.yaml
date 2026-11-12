@@ -1,0 +1,8 @@
+task: ob-opt-01
+model: qwen3_8b
+final:
+  b:
+    formula: ((1)/(((1)/(f)) - ((1)/(a))))
+    value: 30.0
+errors: []
+checks: []

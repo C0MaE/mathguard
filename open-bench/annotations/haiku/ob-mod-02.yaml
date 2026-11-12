@@ -1,0 +1,9 @@
+task: ob-mod-02
+model: haiku
+final:
+  t:
+    formula: null
+    value: 11459.999999999998
+    formula_as_written: 2 * 5730 yr
+errors: []
+checks: []

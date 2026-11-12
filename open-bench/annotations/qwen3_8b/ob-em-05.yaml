@@ -1,0 +1,8 @@
+task: ob-em-05
+model: qwen3_8b
+final:
+  Rtot:
+    formula: R1 + ((R2 R3)/(R2 + R3))
+    value: 220.0
+errors: []
+checks: []

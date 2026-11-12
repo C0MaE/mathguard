@@ -1,0 +1,8 @@
+task: ob-mod-01
+model: llama3.2_3b
+final:
+  Ekin:
+    formula: null
+    value: 0.66
+errors: []
+checks: []

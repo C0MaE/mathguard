@@ -1,0 +1,8 @@
+task: ob-mech-08
+model: qwen3_8b
+final:
+  dv:
+    formula: u * ln(m0/m1)
+    value: 2748.87
+errors: []
+checks: []

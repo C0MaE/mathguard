@@ -1,0 +1,40 @@
+task: ob-mech-04
+model: llama3.2_3b
+final:
+  T:
+    formula: 2 pi sqrt(RE^3 / (G ME))
+    value: 38794.8
+errors:
+- type: approach
+  step: 3
+  note: orbit radius R_E instead of R_E + h
+- type: numeric
+  step: 17
+  note: 6371000^3 = 2.586e20, not 1.496e21
+- type: numeric
+  step: 19
+  note: sqrt(37.9e6) = 6156, not 6204.3
+- type: numeric
+  step: 20
+  note: 2 pi * 6204.3 = 38983, not 38794.8
+checks:
+- step: 17
+  check: value
+  expression: 6371000**3
+  claimed: 1.496e+21
+  rel_tol: 0.002
+- step: 17
+  check: value
+  expression: 6.674e-11 * 5.972e24
+  claimed: 397000000000000.0
+  rel_tol: 0.002
+- step: 19
+  check: value
+  expression: sqrt(37.9e6)
+  claimed: 6204.3
+  rel_tol: 0.002
+- step: 20
+  check: value
+  expression: 2 * pi * 6204.3
+  claimed: 38794.8
+  rel_tol: 0.002

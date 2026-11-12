@@ -1,0 +1,8 @@
+task: ob-mech-01
+model: haiku
+final:
+  x:
+    formula: v0 * sqrt(2H/g)
+    value: 16.15
+errors: []
+checks: []

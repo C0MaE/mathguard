@@ -1,0 +1,8 @@
+task: ob-thermo-03
+model: qwen3_8b
+final:
+  W:
+    formula: Qh * (1 - ((Tc)/(Th)))
+    value: 500.0
+errors: []
+checks: []

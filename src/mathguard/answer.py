@@ -216,6 +216,7 @@ def _plain(text: str, quantity: bool = False) -> str:
 
     With ``quantity=True`` "µ" and "Ω" are read as unit prefixes/units.
     """
+    text = text.replace("\\*", "*")  # Markdown-escaped asterisk
     for a, b in _UNICODE:
         text = text.replace(a, b)
     if quantity:
@@ -227,6 +228,8 @@ def _plain(text: str, quantity: bool = False) -> str:
     text = re.sub(r"([A-Za-z0-9)\]])([⁰¹²³⁴⁵⁶⁷⁸⁹⁻]+)",
                   lambda m: f"{m.group(1)}^{m.group(2).translate(_SUPERSCRIPTS)}", text)
     text = re.sub(r"sqrt\s*([A-Za-z0-9]+)(?![A-Za-z0-9(])", r"sqrt(\1)", text)
+    # thousands separators where a decimal point follows: 38,794.8 -> 38794.8
+    text = re.sub(r"(?<![\d.,])\d{1,3}(?:,\d{3})+(?=\.\d)", lambda m: m.group(0).replace(",", ""), text)
     text = re.sub(r"(?<=\d),(?=\d)", ".", text)  # decimal comma
     if not quantity:
         text = text.replace("[", "(").replace("]", ")")
@@ -244,6 +247,17 @@ def _plain(text: str, quantity: bool = False) -> str:
                 j += 1
             text = text[:m.start()] + f"{m.group(1)}({text[m.end():j - 1]})^{m.group(2)}" + text[j:]
     return text
+
+
+def _greek_names(line: str) -> str:
+    """Greek letters outside $...$ as names, so that plain-text labels such as θ are found."""
+    def conv(seg: str) -> str:
+        for g, name in _GREEK.items():
+            seg = re.sub(g + r"(?=[A-Za-z])", name + " ", seg)  # 4πA -> 4 pi A
+            seg = re.sub(g + r"(?=\s*[√(])", name + "*", seg).replace(g, name)
+        return seg
+    parts = re.split(r"(\$\$.*?\$\$|\$[^$]*\$|\\\(.*?\\\))", line)
+    return "".join(p if i % 2 else conv(p) for i, p in enumerate(parts))
 
 
 _CANON = [(re.compile(r"^(?:var)?epsilon"), "eps"), (re.compile(r"^lambda"), "lam"),
@@ -270,7 +284,7 @@ def _unbrace(s: str, i: int) -> tuple[str, int]:
 
 def _latex_plain(s: str) -> str:
     """Rough LaTeX → plain text, good enough for numbers with units."""
-    s = s.replace("{,}", ".").replace("{.}", ".")
+    s = s.replace("{,}", ".").replace("{.}", ".").replace("\\*", "*")
     s = re.sub(r"\\(?:left|right|displaystyle|textstyle)(?![A-Za-z])", "", s)
     s = re.sub(r"\^\s*\{?\\circ\}?\s*C", " degC", s)
     s = re.sub(r"\^\s*\{?\\circ\}?", " degree", s)
@@ -538,6 +552,7 @@ def _statements(text: str) -> list[_Statement]:
             in_result = False
         if in_result and line.strip():
             result_lines.add(idx + 1)
+        line = _greek_names(line)  # "θ = 41.8 deg" -> "theta = 41.8 deg"
         masked = _mask_math(line)
         matches = []
         for m in _PLAIN_LABEL.finditer(masked):
@@ -757,8 +772,9 @@ def _extract(st: _Statement, ctx: _Context, known: set[str], *,
         q = _quantity_of(text, is_latex)
         if q is not None and q.unit and known:
             tokens = set(_UNIT_TOKEN.findall(q.unit))
-            if len(tokens) >= 2 and tokens <= known:
-                q = None  # "6 m g" is six times mass times g, not metre-grams
+            attached = re.match(r"^\s*[-+]?[\d.,]+[A-Za-z]", q.text) is not None
+            if tokens <= known and "/" not in q.unit and (len(tokens) >= 2 or attached):
+                q = None  # "6 m g" is six times mass times g, not metre-grams; "0.33g" is 0.33 g
         if q is not None:
             ex.value, ex.unit = q.value, q.unit
             m = _NUMBER.match(q.text)
@@ -982,7 +998,8 @@ def _same_with_given(ans: sp.Expr, ref: sp.Expr, ctx: _Context, tol: float) -> b
         return False
     subs = {s: ctx.values[s.name] for s in (ans.free_symbols | ref.free_symbols)
             if s.name in ctx.values}
-    a, b = ans.xreplace(subs), ref.xreplace(subs)
+    # a bare symbol replaced by a float comes back as a Python float
+    a, b = sp.sympify(ans.xreplace(subs)), sp.sympify(ref.xreplace(subs))
     rest = sorted(a.free_symbols | b.free_symbols, key=lambda x: x.name)
     import random
     rng = random.Random(1)

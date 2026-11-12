@@ -1,0 +1,9 @@
+task: ob-mod-01
+model: qwen3_8b
+final:
+  Ekin:
+    formula: null
+    value: 0.66
+    formula_as_written: -WA + hc/lam
+errors: []
+checks: []

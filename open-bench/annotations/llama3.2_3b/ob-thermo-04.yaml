@@ -1,0 +1,24 @@
+task: ob-thermo-04
+model: llama3.2_3b
+final:
+  T2:
+    formula: T1 V1^gamma / V2^gamma
+    value: 30000
+errors:
+- type: approach
+  step: 7
+  note: T V^gamma = const instead of T V^(gamma-1) = const
+- type: numeric
+  step: 31
+  note: 0.1^1.4 = 0.0398, not 0.01
+checks:
+- step: 31
+  check: value
+  expression: 0.1**1.4
+  claimed: 0.01
+  rel_tol: 0.002
+- step: 35
+  check: value
+  expression: 300 / 0.01
+  claimed: 30000
+  rel_tol: 0.002

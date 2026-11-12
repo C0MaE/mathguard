@@ -1,0 +1,8 @@
+task: ob-opt-02
+model: llama3.2_3b
+final:
+  theta:
+    formula: null
+    value: 41.8
+errors: []
+checks: []

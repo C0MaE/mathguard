@@ -414,6 +414,10 @@ Those exercises come from university problem sets and cannot be published.
 [`open-bench/`](https://github.com/C0MaE/mathguard/blob/main/open-bench/README.md) is a
 second set of 24 physics exercises written for this repository under CC BY 4.0, with
 checked reference solutions, so results on it can be reproduced and shared in full.
+On it ([open-bench/RESULTS.md](https://github.com/C0MaE/mathguard/blob/main/open-bench/RESULTS.md)),
+mathguard located 16 of 17 calculation errors of llama3.2 3B at the exact step, with no false
+alarms on 52 correct answers of three models, and the answer grader agreed with the hand grading on
+every quantity it decided (74 of 75).
 
 ## Contributing
 

@@ -1,0 +1,8 @@
+task: ob-em-02
+model: qwen3_8b
+final:
+  t:
+    formula: R C ln(2)
+    value: 0.326
+errors: []
+checks: []

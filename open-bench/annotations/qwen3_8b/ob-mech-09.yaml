@@ -1,0 +1,9 @@
+task: ob-mech-09
+model: qwen3_8b
+final:
+  Qv:
+    formula: null
+    value: 0.626
+    formula_as_written: A * sqrt(2 g h)
+errors: []
+checks: []

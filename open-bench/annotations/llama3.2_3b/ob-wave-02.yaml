@@ -1,0 +1,21 @@
+task: ob-wave-02
+model: llama3.2_3b
+final:
+  f:
+    formula: null
+    value: 524.6
+errors:
+- type: approach
+  step: 3
+  note: f0 (v + vs)/(v - vs) is not the Doppler formula for a moving source
+checks:
+- step: 15
+  check: value
+  expression: 373 / 313
+  claimed: 1.19
+  rel_tol: 0.005
+- step: 17
+  check: value
+  expression: 440 * 373 / 313
+  claimed: 524.6
+  rel_tol: 0.002

@@ -1,0 +1,8 @@
+task: ob-em-01
+model: haiku
+final:
+  Wel:
+    formula: (1/2) * eps0 * A * U^2 / d
+    value: 4.4299999999999993e-07
+errors: []
+checks: []

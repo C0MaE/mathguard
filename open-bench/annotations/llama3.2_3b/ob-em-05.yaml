@@ -1,0 +1,21 @@
+task: ob-em-05
+model: llama3.2_3b
+final:
+  Rtot:
+    formula: null
+    value: 0.008333
+errors:
+- type: interpretation
+  step: 30
+  note: computes Rtot = 220 ohm correctly (line 27) but reports 1/Rt as the result
+checks:
+- step: 21
+  check: value
+  expression: 1 / (1/200 + 1/300)
+  claimed: 120
+  rel_tol: 0.002
+- step: 27
+  check: value
+  expression: 100 + 120
+  claimed: 220
+  rel_tol: 0.002

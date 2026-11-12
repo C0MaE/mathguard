@@ -1,0 +1,32 @@
+task: ob-mech-06
+model: llama3.2_3b
+final:
+  h:
+    formula: null
+    value: 0.407
+errors:
+- type: sign
+  step: 29
+  note: v_final = 0.04 / 2.01 = +0.0199 m/s, not -0.02 m/s
+- type: numeric
+  step: 37
+  note: 0.5 * 0.01 kg * (400 m/s)^2 = 800 J, not 8 J
+- type: approach
+  step: 49
+  note: kinetic energy of the bullet treated as conserved in a perfectly inelastic collision
+checks:
+- step: 29
+  check: value
+  expression: 0.04 / 2.01
+  claimed: -0.02
+  rel_tol: 0.02
+- step: 37
+  check: value
+  expression: 0.5 * 0.01 * 400**2
+  claimed: 8
+  rel_tol: 0.002
+- step: 57
+  check: value
+  expression: 8 / (2 * 9.81)
+  claimed: 0.407
+  rel_tol: 0.002

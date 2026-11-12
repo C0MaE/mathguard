@@ -1,0 +1,8 @@
+task: ob-thermo-02
+model: qwen3_8b
+final:
+  Tf:
+    formula: (m1*T1 + m2*T2)/(m1 + m2)
+    value: 317.15
+errors: []
+checks: []

@@ -1,0 +1,8 @@
+task: ob-mech-07
+model: haiku
+final:
+  T:
+    formula: 2 pi sqrt(2 L / (3 g))
+    value: 1.64
+errors: []
+checks: []

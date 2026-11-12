@@ -1,0 +1,13 @@
+task: ob-opt-01
+model: llama3.2_3b
+final:
+  b:
+    formula: 1 / (1/f - 1/a)
+    value: 30
+errors: []
+checks:
+- step: 20
+  check: value
+  expression: 1/10 - 1/15
+  claimed: 0.03333333333333333
+  rel_tol: 0.001

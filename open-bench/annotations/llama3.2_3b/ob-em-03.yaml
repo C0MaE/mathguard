@@ -1,0 +1,21 @@
+task: ob-em-03
+model: llama3.2_3b
+final:
+  B:
+    formula: mu0 I / (2 pi r)
+    value: 0.001006
+errors:
+- type: numeric
+  step: 17
+  note: 1.25664e-5 / 0.31416 = 4.0e-5, not 1.006e-3
+checks:
+- step: 16
+  check: value
+  expression: 2 * pi * 0.05
+  claimed: 0.31416
+  rel_tol: 0.002
+- step: 17
+  check: value
+  expression: 1.25664e-6 * 10 / 0.31416
+  claimed: 0.001006
+  rel_tol: 0.002

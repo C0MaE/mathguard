@@ -1,0 +1,9 @@
+task: ob-em-02
+model: llama3.2_3b
+final:
+  t:
+    formula: null
+    value: 0.325
+    formula_as_written: tau ln(2)
+errors: []
+checks: []

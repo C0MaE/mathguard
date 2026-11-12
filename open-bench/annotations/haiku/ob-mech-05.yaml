@@ -1,0 +1,8 @@
+task: ob-mech-05
+model: haiku
+final:
+  h:
+    formula: k d^2 / (2 m g)
+    value: 2.04
+errors: []
+checks: []
