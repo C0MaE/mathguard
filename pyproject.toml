@@ -40,21 +40,31 @@ Issues = "https://github.com/C0MaE/mathguard/issues"
 [project.optional-dependencies]
 mcp = []  # kept so that "mathguard[mcp]" still installs; mcp is a core dependency since 0.3.1
 bench = ["pyyaml>=6"]
-dev = ["pytest>=7", "pyyaml>=6", "ruff>=0.6"]
+inspect = ["inspect-ai>=0.3.100"]
+dev = ["pytest>=7", "pyyaml>=6", "ruff>=0.6", "inspect-ai>=0.3.100"]
 
 [project.scripts]
 mathguard = "mathguard.cli:main"
 mathguard-mcp = "mathguard.mcp_server:main"
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.setuptools]
+packages = ["mathguard", "mathguard.open_bench"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+# The open benchmark ships with the package, so that "inspect eval mathguard/open_bench" works
+"mathguard.open_bench" = "open-bench"
 
 [tool.setuptools.package-data]
 mathguard = ["py.typed"]
+"mathguard.open_bench" = ["tasks/*.yaml", "LICENSE", "README.md"]
+
+[project.entry-points.inspect_ai]
+mathguard = "mathguard.inspect_scorer"
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "src/mathguard"]
-addopts = "--doctest-modules --ignore=src/mathguard/mcp_server.py"
+addopts = "--doctest-modules --ignore=src/mathguard/mcp_server.py --ignore=src/mathguard/inspect_scorer.py"
 
 [tool.ruff]
 line-length = 120

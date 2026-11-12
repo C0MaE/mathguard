@@ -305,6 +305,39 @@ claude mcp add mathguard -- uvx mathguard mcp
 Setup for other agents (Cursor, VS Code/Copilot, Codex, Claude Desktop, …) is in
 [skills/mathguard/references/setup.md](https://github.com/C0MaE/mathguard/blob/main/skills/mathguard/references/setup.md).
 
+### Inspect AI scorer
+
+For model evaluations with [Inspect AI](https://inspect.aisi.org.uk),
+`mathguard_scorer()` grades the final answer like `check_answer`: formulas
+symbolically, numbers with units and a rounding-aware tolerance.
+
+```bash
+pip install "mathguard[inspect]"
+inspect eval mathguard/open_bench --model openai/gpt-4o-mini   # the open benchmark, 24 physics tasks
+```
+
+```python
+from inspect_ai import Task
+from inspect_ai.dataset import Sample
+from inspect_ai.solver import generate
+from mathguard.inspect_scorer import mathguard_scorer
+
+Task(
+    dataset=[Sample(input="A ball rolls down a height h ... speed at the bottom?",
+                    target="v = sqrt(10 g h / 7)",
+                    metadata={"given": {"h": "1.2 m", "g": "9.81 m/s^2"}})],
+    solver=generate(),
+    scorer=mathguard_scorer(),
+)
+```
+
+The target is the reference; `given`, `units`, `assumptions` and `rel_tol` in
+the sample metadata are passed on. A whole task file goes into
+`metadata={"mathguard_task": ...}`, and `task_dataset(path)` builds samples from
+task files. Answers mathguard cannot decide count as incorrect, or as partial
+with `mathguard_scorer(inconclusive="partial")`. The grading report is in the
+score's explanation and metadata.
+
 ## Expression syntax
 
 * Powers: `x^2` or `x**2`. Implicit multiplication: `2x`, `m c^2`, `x(y+1)`.
