@@ -1,19 +1,19 @@
 # Changelog
 
-## Unreleased
+## 0.4.0
 
-* Open benchmark results (`open-bench/RESULTS.md`) with all model answers and
-  annotations: Claude Haiku, qwen3:8b and llama3.2:3b.
-* Fix: the answer grader now reads Greek letters as plain-text labels (`θ = 41.8 deg`),
-  a given symbol right after a number (`0.3268g`), Markdown-escaped `\*` and
-  thousands separators before a decimal point (`38,794.8 s`); it no longer crashes
-  when a result is written as a given quantity (`Wel = U = 4.95 J`).
 * Inspect AI scorer: `mathguard.inspect_scorer.mathguard_scorer()` grades final
   answers in Inspect evaluations; `inspect eval mathguard/open_bench` runs the
   open benchmark, whose task files now ship with the package. Extra `inspect`.
 * Open benchmark: 24 physics exercises written for this repository, licensed
   CC BY 4.0, with checked two-path reference solutions (`open-bench/`).
   `bench.py --root open-bench ...` runs the benchmark tools on it.
+* Open benchmark results (`open-bench/RESULTS.md`) with all model answers and
+  annotations: Claude Haiku, qwen3:8b and llama3.2:3b.
+* Fix: the answer grader now reads Greek letters as plain-text labels (`θ = 41.8 deg`),
+  a given symbol right after a number (`0.3268g`), Markdown-escaped `\*` and
+  thousands separators before a decimal point (`38,794.8 s`); it no longer crashes
+  when a result is written as a given quantity (`Wel = U = 4.95 J`).
 * Zenodo DOI (10.5281/zenodo.24147172, all versions) in the README and `CITATION.cff`.
 
 ## 0.3.3
