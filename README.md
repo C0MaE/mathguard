@@ -19,6 +19,8 @@ out reliably. `mathguard` is a small verification layer built on SymPy and Pint:
 * **Check single claims** (identities, derivatives, integrals, units) with a
   concrete counterexample when they are wrong.
 
+**[Try it in your browser](https://huggingface.co/spaces/C0MaE/mathguard)**, no install needed.
+
 ![mathguard doc finds the line where a worked solution goes wrong](https://raw.githubusercontent.com/C0MaE/mathguard/main/docs/demo.gif)
 
 ```python
